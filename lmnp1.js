@@ -74,8 +74,10 @@ let amortissement = function () {
   var DaysYear = 365;
 
   /* Valeurs charges annuelles*/
-
-  const TabValeur = [
+  const TabValeur = [];
+  for (var i = 0; i < 50; i++) { TabValeur.push([ Number(dateBegin.format("YYYY")), montantAnnuelLoyer, MontantEmprunt, FraisAministration , FraiLocal, IndemnitésEviction, DépensesTravaux, ChargesLocatives, Impôts, PrimesAssurances, ProvisionsChargesCopropriété, IntérêtsEtFraisEmprunt, DéductionsSpécifiques, ]); }
+  
+  /*const TabValeur = [
     [
       Number(dateBegin.format("YYYY")),
       montantAnnuelLoyer,
@@ -365,37 +367,7 @@ let amortissement = function () {
       Number(dateBegin.format("YYYY")),
       montantAnnuelLoyer,
       MontantEmprunt,
-      FraisAministration /* a exécuter cinquante fois*/,
-      FraiLocal,
-      IndemnitésEviction,
-      DépensesTravaux,
-      ChargesLocatives,
-      Impôts,
-      PrimesAssurances,
-      ProvisionsChargesCopropriété,
-      IntérêtsEtFraisEmprunt,
-      DéductionsSpécifiques,
-    ],
-    [
-      Number(dateBegin.format("YYYY")),
-      montantAnnuelLoyer,
-      MontantEmprunt,
-      FraisAministration ,
-      FraiLocal,
-      IndemnitésEviction,
-      DépensesTravaux,
-      ChargesLocatives,
-      Impôts,
-      PrimesAssurances,
-      ProvisionsChargesCopropriété,
-      IntérêtsEtFraisEmprunt,
-      DéductionsSpécifiques,
-    ],
-    [
-      Number(dateBegin.format("YYYY")),
-      montantAnnuelLoyer,
-      MontantEmprunt,
-      FraisAministration ,
+      FraisAministration,
       FraiLocal,
       IndemnitésEviction,
       DépensesTravaux,
@@ -710,7 +682,22 @@ let amortissement = function () {
       Number(dateBegin.format("YYYY")),
       montantAnnuelLoyer,
       MontantEmprunt,
-      FraisAministration,
+      FraisAministration ,
+      FraiLocal,
+      IndemnitésEviction,
+      DépensesTravaux,
+      ChargesLocatives,
+      Impôts,
+      PrimesAssurances,
+      ProvisionsChargesCopropriété,
+      IntérêtsEtFraisEmprunt,
+      DéductionsSpécifiques,
+    ],
+    [
+      Number(dateBegin.format("YYYY")),
+      montantAnnuelLoyer,
+      MontantEmprunt,
+      FraisAministration ,
       FraiLocal,
       IndemnitésEviction,
       DépensesTravaux,
@@ -841,18 +828,24 @@ let amortissement = function () {
       IntérêtsEtFraisEmprunt,
       DéductionsSpécifiques,
     ],
-  ];
-
-  /*TabValeur[1][0] = 2023;*/
-  /*var n = TabValeur[0];*/
-  /*var x = 0;
-  for (var i = 0; i < TabValeur.length; i++) {
-    n++;
-    x += n;
-    console.log(n);
-  }*/
-  /*let removed = TabValeur.splice([1][0], 0, "2023");
-  console.table(removed);*/
+    [
+      Number(dateBegin.format("YYYY")),
+      montantAnnuelLoyer,
+      MontantEmprunt,
+      FraisAministration,
+      FraiLocal,
+      IndemnitésEviction,
+      DépensesTravaux,
+      ChargesLocatives,
+      Impôts,
+      PrimesAssurances,
+      ProvisionsChargesCopropriété,
+      IntérêtsEtFraisEmprunt,
+      DéductionsSpécifiques,
+    ],
+  ];*/
+  for (var i = 1; i < TabValeur.length; i++) { TabValeur[i][0] = TabValeur[0][0]+i; }
+  
   console.table(TabValeur);
 
   /*amortissement du mobilier*/
@@ -865,7 +858,7 @@ let amortissement = function () {
   /*var annee = 1;*/
 
   var tableauAmorMobilier = [
-    [dateBegin.format("YYYY"), AnnuiteMobProra, VNC1],
+    [Number(dateBegin.format("YYYY")), AnnuiteMobProra, VNC1],
     [dateBegin.format("YYYY"), annuiteMobilier, VNC],
     [dateBegin.format("YYYY"), annuiteMobilier, VNC],
     [dateBegin.format("YYYY"), annuiteMobilier, VNC],
