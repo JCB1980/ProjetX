@@ -402,6 +402,7 @@ let amortissement = function () {
   var TotAn49 = annuiteStructure;
   var TotAn50 = annuiteStructure;
 
+  
   const tabAmorImmo = [[
     Number(dateBegin.format("YYYY")),
     annStrucProra,
@@ -418,15 +419,18 @@ let amortissement = function () {
 annuiteStructure,
 annuiteChauffage,
 annuiteElectricite,
-annuiteEtancheite,
 annuitePlomberie,
 annuiteMenuiserie,
+annuiteEtancheite,
 annuiteRavalement,
 annuiteAscenseur,
-TotAn2 ]); }
-
-  for (var i = 0; i < tabAmorImmo.length; i++) { tabAmorImmo[i][0] = tabAmorImmo[0][0]+i; }
-
+]);
+}
+   
+  for (var i = 0; i < tabAmorImmo.length; i++) { tabAmorImmo[i][0] = tabAmorImmo[0][0]+i; 
+}
+    for (var i =valeurDuBien ;i<tabAmorImmo.length;i++) { tabAmorImmo[i][0]=tabAmorImmo[0][9]-i;
+  } 
 /*  const tabAmorImmo = [
     [
       dateBegin.format("YYYY"),
@@ -724,7 +728,7 @@ TotAn2 ]); }
     [dateBegin.format("YYYY"), annuiteStructure, TotAn49],
     [dateBegin.format("YYYY"), annuiteStructure, TotAn50],
   ];*/
-  console.table(tabAmorImmo);
+ console.table(tabAmorImmo);
 
   console.log("annuité mobilier:" + annuiteMobilier);
   console.log("annuite frais :" + annuiteFrais);
