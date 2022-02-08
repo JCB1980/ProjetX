@@ -163,6 +163,8 @@ let amortissement = function () {
   
   
   var VNC = valeurDuBien
+  var sumAnnuite=0
+
   const tabAmorImmo = [[
     Number(dateBegin.format("YYYY")),
     annStrucProra,
@@ -173,6 +175,7 @@ let amortissement = function () {
     annMenuiProra,
     annRavalPropra,
     annAscProra,
+    sumAnnuite,
     VNC,
   ]];
   for (var i = 1; i < 50; i++) { tabAmorImmo.push([ Number(dateBegin.format("YYYY")),
@@ -184,12 +187,14 @@ annuiteMenuiserie,
 annuiteEtancheite,
 annuiteRavalement,
 annuiteAscenseur,
+sumAnnuite,
+VNC
 ]);
 }
    
   for (var i = 0; i < tabAmorImmo.length; i++) { tabAmorImmo[i][0] = tabAmorImmo[0][0]+i; 
 }
-   /*for (var i =0 ;i<tabAmorImmo.length;i++) { tabAmorImmo[i][9]=tabAmorImmo[0][9]-i;
+  for (var i =0 ;i<tabAmorImmo.length;i++) { tabAmorImmo[i][9]=...
   } */
 
  console.table(tabAmorImmo);
