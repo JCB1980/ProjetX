@@ -73,6 +73,9 @@ let amortissement = function () {
   console.log(Math.round(days));
   var DaysYear = 365;
 
+  var datefin = moment(dateBegin).add(5,"year").calendar();
+  console.log(datefin);
+
   /* charges externes*/
 
   const TabCharExt = [];
@@ -117,11 +120,16 @@ let amortissement = function () {
   const tableauAmorMobilier = [
     [Number(dateBegin.format("YYYY")), AnnuiteMobProra, VNC1]
   ];
-  for (var i = 1; i < 15; i++) { tableauAmorMobilier.push([ Number(dateBegin.format("YYYY")), annuiteMobilier, VNC ]); }
+  for (var i = 1; i < 10; i++) { tableauAmorMobilier.push([ Number(dateBegin.format("YYYY")), annuiteMobilier, VNC ]); }
   
   /* boucle temporel*/
   for (var i = 0; i < tableauAmorMobilier.length; i++) { tableauAmorMobilier[i][0] = tableauAmorMobilier[0][0]+i; }
- 
+  
+  tableauAmorMobilier[0][2] = ValeurMobilier - tableauAmorMobilier[0][1];
+  
+  for (var i = 1; i < tableauAmorMobilier.length; i++) {
+    tableauAmorMobilier[i][2] = tableauAmorMobilier[i-1][2] - tableauAmorMobilier[i][1];
+  }
     console.table(tableauAmorMobilier);
 
   /* Amortissement frais*/
@@ -132,26 +140,18 @@ let amortissement = function () {
   var AnnuiteFraisProra = Math.round((annuiteFrais * days) / DaysYear);
   var VNC1F = FraisEtablissement - AnnuiteFraisProra;
   var VNC2 = 0
-  /*VNC1F - annuiteFrais;*/
-
-  console.log(FraisEtablissement);
-
+  
   const tableauAmorFrais = [
     [Number(dateBegin.format("YYYY")), AnnuiteFraisProra, VNC1F],
   ];
      for (var i = 1; i < 5; i++) {tableauAmorFrais.push([ Number(dateBegin.format("YYYY")), annuiteFrais, VNC2]); }
   
      for (var i = 0; i < tableauAmorFrais.length; i++) { tableauAmorFrais[i][0] = tableauAmorFrais[0][0]+i; }
-      console.table(tableauAmorFrais);
-
-      for (var i = 0; i < tableauAmorFrais.length; i++) {
-        var somme = 0;
-        var uneAnnee = tableauAmorFrais[i];
-        for (var j =1 ;j<=1; j++) { 
-          somme += uneAnnee[j];
-       }
-       uneAnnee[2]=somme
-    }
+      
+    tableauAmorFrais[0][2] = FraisEtablissement - tableauAmorFrais[0][1];
+    for (var i = 1; i < tableauAmorFrais.length; i++) {
+        tableauAmorFrais[i][2] = tableauAmorFrais[i-1][2] - tableauAmorFrais[i][1];
+        }
     console.table(tableauAmorFrais); 
     
     
@@ -241,26 +241,11 @@ VNC
    }
    uneAnnee[9]=somme
 }
-/*for (var i = 0; i < tabAmorImmo.length; i++) {tabAmorImmo[i][10]=tabAmorImmo[0][10]-tabAmorImmo[0][9];
-  
-tabAmorImmo[0][9] -= tabAmorImmo[0][10];
-for (var i = 1; i < tabAmorImmo.length; i++) {
-  tabAmorImmo[i][9] -= tabAmorImmo[i-1][10];
-}
 
-}*/
-tabAmorImmo[0][9] -= tabAmorImmo[0][10]
+tabAmorImmo[0][10] = valeurDuBien - tabAmorImmo[0][9];
 for (var i = 1; i < tabAmorImmo.length; i++) {
-  tabAmorImmo[i][9] -= tabAmorImmo[i-1][10];
+  tabAmorImmo[i][10] = tabAmorImmo[i-1][10] - tabAmorImmo[i][9];
 }
-/*var diff = 0;
-var uneAnnee = tabAmorImmo[i];
-  for (var j = 9 ; j<=10; j++) { 
-    diff-=uneAnnee[j];
-}
-}
- uneAnnee[10]=diff*/
-
 
 console.table(tabAmorImmo);
 
