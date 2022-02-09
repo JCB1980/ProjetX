@@ -204,16 +204,14 @@ VNC
    }
    uneAnnee[9]=somme
 }
-/*for (var i = 0; i < tabAmorImmo.length; i++) {tabAmorImmo[i][10]=tabAmorImmo[0][10]-tabAmorImmo[i][9];
-  for(var j=9;j<=10;j++){
-
-  }
+/*for (var i = 0; i < tabAmorImmo.length; i++) {tabAmorImmo[i][10]=tabAmorImmo[0][10]-tabAmorImmo[0][9];
+  
 }*/
 for (var i = 0; i < tabAmorImmo.length; i++) {
   var diff = 0;
   var uneAnnee = tabAmorImmo[i];
   for (var j = 9 ; j<=10; j++) { 
-    diff+=uneAnnee[j];
+    diff-=uneAnnee[j];
 }
  uneAnnee[10]=diff
 }
