@@ -76,7 +76,8 @@ let amortissement = function () {
   /* Valeurs charges annuelles*/
   const TabValeur = [];
   for (var i = 0; i < 50; i++) { TabValeur.push([ Number(dateBegin.format("YYYY")), montantAnnuelLoyer, MontantEmprunt, FraisAministration , FraiLocal, IndemnitésEviction, DépensesTravaux, ChargesLocatives, Impôts, PrimesAssurances, ProvisionsChargesCopropriété, IntérêtsEtFraisEmprunt, DéductionsSpécifiques, ]); }
-  
+  /*for (var i = 0; i < 50; i++) { TabValeur.push({ date : Number(dateBegin.format("YYYY")), montantAnnuelLoyer, MontantEmprunt, FraisAministration , FraiLocal, IndemnitésEviction, DépensesTravaux, ChargesLocatives, Impôts, PrimesAssurances, ProvisionsChargesCopropriété, IntérêtsEtFraisEmprunt, DéductionsSpécifiques }); }*/
+
  
   for (var i = 1; i < TabValeur.length; i++) { TabValeur[i][0] = TabValeur[0][0]+i; }
   
@@ -161,9 +162,9 @@ let amortissement = function () {
   var annRavalPropra = Math.round((annuiteRavalement * days) / DaysYear);
   var annAscProra = Math.round((annuiteAscenseur * days) / DaysYear);
   
-  
+ 
   var VNC = valeurDuBien
-  var sumAnnuite=0
+  sumannuite=0
 
   const tabAmorImmo = [[
     Number(dateBegin.format("YYYY")),
@@ -175,7 +176,7 @@ let amortissement = function () {
     annMenuiProra,
     annRavalPropra,
     annAscProra,
-    sumAnnuite,
+    sumannuite,
     VNC,
   ]];
   for (var i = 1; i < 50; i++) { tabAmorImmo.push([ Number(dateBegin.format("YYYY")),
@@ -187,17 +188,37 @@ annuiteMenuiserie,
 annuiteEtancheite,
 annuiteRavalement,
 annuiteAscenseur,
-sumAnnuite,
+sumannuite,
 VNC
 ]);
 }
    
   for (var i = 0; i < tabAmorImmo.length; i++) { tabAmorImmo[i][0] = tabAmorImmo[0][0]+i; 
 }
-  for (var i =0 ;i<tabAmorImmo.length;i++) { tabAmorImmo[i][9]=...
-  } */
 
- console.table(tabAmorImmo);
+  for (var i = 0; i < tabAmorImmo.length; i++) {
+    var somme = 0;
+    var uneAnnee = tabAmorImmo[i];
+    for (var j =1 ;j<=8; j++) { 
+      somme += uneAnnee[j];
+   }
+   uneAnnee[9]=somme
+}
+/*for (var i = 0; i < tabAmorImmo.length; i++) {tabAmorImmo[i][10]=tabAmorImmo[0][10]-tabAmorImmo[i][9];
+  for(var j=9;j<=10;j++){
+
+  }
+}*/
+for (var i = 0; i < tabAmorImmo.length; i++) {
+  var diff = 0;
+  var uneAnnee = tabAmorImmo[i];
+  for (var j = 9 ; j<=10; j++) { 
+    diff+=uneAnnee[j];
+}
+ uneAnnee[10]=diff
+}
+
+console.table(tabAmorImmo);
 
   console.log("annuité mobilier:" + annuiteMobilier);
   console.log("annuite frais :" + annuiteFrais);
