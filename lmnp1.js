@@ -11,7 +11,7 @@ let amortissement = function () {
   let IndemnitésEviction = Number(document.querySelector("#A10").value);
   let DépensesTravaux = Number(document.querySelector("#A11").value);
   let ChargesLocatives = Number(document.querySelector("#A12").value);
-  let Impôts = Number(document.querySelector("#A13").value);
+  let Impots = Number(document.querySelector("#A13").value);
   let PrimesAssurances = Number(document.querySelector("#A14").value);
   let ProvisionsChargesCopropriété = Number(
     document.querySelector("#A15").value
@@ -73,15 +73,37 @@ let amortissement = function () {
   console.log(Math.round(days));
   var DaysYear = 365;
 
-  /* Valeurs charges annuelles*/
-  const TabValeur = [];
-  for (var i = 0; i < 50; i++) { TabValeur.push([ Number(dateBegin.format("YYYY")), montantAnnuelLoyer, MontantEmprunt, FraisAministration , FraiLocal, IndemnitésEviction, DépensesTravaux, ChargesLocatives, Impôts, PrimesAssurances, ProvisionsChargesCopropriété, IntérêtsEtFraisEmprunt, DéductionsSpécifiques, ]); }
-  /*for (var i = 0; i < 50; i++) { TabValeur.push({ date : Number(dateBegin.format("YYYY")), montantAnnuelLoyer, MontantEmprunt, FraisAministration , FraiLocal, IndemnitésEviction, DépensesTravaux, ChargesLocatives, Impôts, PrimesAssurances, ProvisionsChargesCopropriété, IntérêtsEtFraisEmprunt, DéductionsSpécifiques }); }*/
+  /* charges externes*/
 
- 
-  for (var i = 1; i < TabValeur.length; i++) { TabValeur[i][0] = TabValeur[0][0]+i; }
+  const TabCharExt = [];
+  var sommeCharge=0;
   
-  console.table(TabValeur);
+  for (var i = 0; i < 50; i++) { TabCharExt.push([ Number(dateBegin.format("YYYY")), montantAnnuelLoyer, MontantEmprunt, FraisAministration , FraiLocal, IndemnitésEviction, DépensesTravaux, ChargesLocatives, PrimesAssurances, ProvisionsChargesCopropriété, IntérêtsEtFraisEmprunt, DéductionsSpécifiques,sommeCharge ]); }
+  
+  for (var i = 1; i < TabCharExt.length; i++) { TabCharExt[i][0] = TabCharExt[0][0]+i; }
+  
+  for (var i = 0; i < TabCharExt.length; i++) {
+    var somme = 0;
+    var uneAnnee = TabCharExt[i];
+    for (var j =1 ;j<=11; j++) { 
+      somme += uneAnnee[j];
+   }
+   uneAnnee[12]=somme
+  }
+
+  
+    console.table(TabCharExt);
+
+  /*Charges Impôts*/
+
+  const TabImpo = [];
+  for (var i = 0; i < 50; i++) { TabImpo.push([ Number(dateBegin.format("YYYY")), Impots ]); }
+  
+   for (var i = 1; i < TabImpo.length; i++) { TabImpo[i][0] = TabImpo[0][0]+i; }
+  
+  console.table(TabImpo);
+
+
 
   /*amortissement du mobilier*/
 
@@ -91,6 +113,7 @@ let amortissement = function () {
   var VNC = VNC1 - annuiteMobilier;
   
   /* boucle push*/
+
   const tableauAmorMobilier = [
     [Number(dateBegin.format("YYYY")), AnnuiteMobProra, VNC1]
   ];
@@ -102,13 +125,16 @@ let amortissement = function () {
     console.table(tableauAmorMobilier);
 
   /* Amortissement frais*/
-  
+  var FraisEtablissement = Number(FraisNotaire) + Number(FraisBancaire) + Number(HonorairesAgence)
   var annuiteFrais =
     (Number(FraisNotaire) + Number(FraisBancaire) + Number(HonorairesAgence)) *
     txamortFrais;
   var AnnuiteFraisProra = Math.round((annuiteFrais * days) / DaysYear);
-  var VNC1F = FraisAministration - AnnuiteFraisProra;
-  var VNC2 = VNC1F - annuiteFrais;
+  var VNC1F = FraisEtablissement - AnnuiteFraisProra;
+  var VNC2 = 0
+  /*VNC1F - annuiteFrais;*/
+
+  console.log(FraisEtablissement);
 
   const tableauAmorFrais = [
     [Number(dateBegin.format("YYYY")), AnnuiteFraisProra, VNC1F],
@@ -118,6 +144,17 @@ let amortissement = function () {
      for (var i = 0; i < tableauAmorFrais.length; i++) { tableauAmorFrais[i][0] = tableauAmorFrais[0][0]+i; }
       console.table(tableauAmorFrais);
 
+      for (var i = 0; i < tableauAmorFrais.length; i++) {
+        var somme = 0;
+        var uneAnnee = tableauAmorFrais[i];
+        for (var j =1 ;j<=1; j++) { 
+          somme += uneAnnee[j];
+       }
+       uneAnnee[2]=somme
+    }
+    console.table(tableauAmorFrais); 
+    
+    
   var annuiteAscenseur = partH * txamortAscenseur;
   var yes = document.querySelector('input[value="oui"]');
   console.log(yes);
@@ -206,15 +243,24 @@ VNC
 }
 /*for (var i = 0; i < tabAmorImmo.length; i++) {tabAmorImmo[i][10]=tabAmorImmo[0][10]-tabAmorImmo[0][9];
   
+tabAmorImmo[0][9] -= tabAmorImmo[0][10];
+for (var i = 1; i < tabAmorImmo.length; i++) {
+  tabAmorImmo[i][9] -= tabAmorImmo[i-1][10];
+}
+
 }*/
-for (var i = 0; i < tabAmorImmo.length; i++) {
-  var diff = 0;
-  var uneAnnee = tabAmorImmo[i];
+tabAmorImmo[0][9] -= tabAmorImmo[0][10]
+for (var i = 1; i < tabAmorImmo.length; i++) {
+  tabAmorImmo[i][9] -= tabAmorImmo[i-1][10];
+}
+/*var diff = 0;
+var uneAnnee = tabAmorImmo[i];
   for (var j = 9 ; j<=10; j++) { 
     diff-=uneAnnee[j];
 }
- uneAnnee[10]=diff
 }
+ uneAnnee[10]=diff*/
+
 
 console.table(tabAmorImmo);
 
