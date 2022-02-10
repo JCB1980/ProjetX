@@ -125,6 +125,7 @@ let amortissement = function () {
   /* boucle push*/
 
   const tableauAmorMobilier = [
+    [0,0,ValeurMobilier],
     [Number(dateBegin.format("YYYY")), AnnuiteMobProra, VNC1]
   ];
   for (var i = 1; i < 10; i++) { tableauAmorMobilier.push([ Number(dateBegin.format("YYYY")), annuiteMobilier, VNC ]); }
@@ -149,6 +150,7 @@ let amortissement = function () {
   var VNC2 = 0
   
   const tableauAmorFrais = [
+    [0,0,FraisEtablissement],
     [Number(dateBegin.format("YYYY")), AnnuiteFraisProra, VNC1F],
   ];
      for (var i = 1; i < 5; i++) {tableauAmorFrais.push([ Number(dateBegin.format("YYYY")), annuiteFrais, VNC2]); }
@@ -210,7 +212,9 @@ let amortissement = function () {
   var VNC = valeurDuBien
   sumannuite=0
 
-  const tabAmorImmo = [[
+  const tabAmorImmo = [
+    [0,0,0,0,0,0,0,0,0,valeurDuBien],
+    [
     Number(dateBegin.format("YYYY")),
     annStrucProra,
     annChaufProra,
@@ -259,14 +263,16 @@ console.table(tabAmorImmo);
 
 /*Déclaration 2033A*/
 
-var ImmoCorpo =
-var ImmoIncorpo
-var ResEx
-var AmorImmoCorp
-var NetExCorp
-var NetExIncorp
+var ImmoCorpoBrut = tabAmorImmo[0][10]+tableauAmorMobilier[0][2];
+var ImmoCorpoAmor= tabAmorImmo[0][9]+tableauAmorMobilier[0][1];
+var ImmoCorpNetex = ImmoCorpoBrut-ImmoCorpoAmor;
+var ImmoIncorBrut = tableauAmorFrais[0][2];
+var ImmoIncorpAmor= tableauAmorFrais[0][1];
+var ImIncNetex = ImmoIncorBrut-ImmoIncorpAmor;
 
-Tab2033A=[ImmoCorpo,ImmoIncorpo,ResEx,AmorImmoCorp,NetExCorp, NetExIncorp]
+Tab2033A=[ImmoCorpoBrut,ImmoCorpoAmor,ImmoCorpNetex,ImmoIncorBrut,ImmoIncorpAmor,ImIncNetex]
+
+console.table(Tab2033A);
 
 /*Déclaration 2033B*/
 
