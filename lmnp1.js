@@ -73,8 +73,15 @@ let amortissement = function () {
   console.log(Math.round(days));
   var DaysYear = 365;
 
+  /* prorata dernière année
+
   var datefin = moment(dateBegin).add(5,"year").calendar();
   console.log(datefin);
+  /*var duration =
+  var DateDebut=moment(datefin).startOf("year");
+  console.log(DateDebut);*/
+
+
 
   /* charges externes*/
 
@@ -155,7 +162,7 @@ let amortissement = function () {
     console.table(tableauAmorFrais); 
     
     
-  var annuiteAscenseur = partH * txamortAscenseur;
+  var annuiteAscenseur = Math.round(partH * txamortAscenseur);
   var yes = document.querySelector('input[value="oui"]');
   console.log(yes);
   yes.onchange = function () {
@@ -166,19 +173,19 @@ let amortissement = function () {
     }
   };
   console.log(yes.onchange);
-  let annuiteStructure = partA * txamortStructure;
+  let annuiteStructure = Math.round(partA * txamortStructure);
 
-  let annuiteMenuiserie = partB * txamortMenuiseries;
+  let annuiteMenuiserie = Math.round(partB * txamortMenuiseries);
 
-  let annuiteChauffage = partC * txamortChauffage;
+  let annuiteChauffage = Math.round (partC * txamortChauffage);
 
-  let annuiteEtancheite = partD * txamortEtancheite;
+  let annuiteEtancheite = Math.round(partD * txamortEtancheite);
 
-  let annuiteRavalement = partE * txamortRavalement;
+  let annuiteRavalement = Math.round(partE * txamortRavalement);
 
-  let annuiteElectricite = partF * txamortElectricite;
+  let annuiteElectricite = Math.round(partF * txamortElectricite);
 
-  let annuitePlomberie = partG * txamortPlomberie;
+  let annuitePlomberie = Math.round(partG * txamortPlomberie);
 
   var annuiteImmobilier =
     Number(annuiteStructure) +
@@ -248,6 +255,45 @@ for (var i = 1; i < tabAmorImmo.length; i++) {
 }
 
 console.table(tabAmorImmo);
+
+
+/*Déclaration 2033A*/
+
+var ImmoCorpo =
+var ImmoIncorpo
+var ResEx
+var AmorImmoCorp
+var NetExCorp
+var NetExIncorp
+
+Tab2033A=[ImmoCorpo,ImmoIncorpo,ResEx,AmorImmoCorp,NetExCorp, NetExIncorp]
+
+/*Déclaration 2033B*/
+
+var Prod
+var CharExt
+var Imp
+var DotAmor
+var DefiAntRepo
+
+Tab2033B =[Prod,CharExt,Imp,DotAmor,DefiAntRepo]
+
+/*Déclaration 2033C*/
+
+var Autres
+var DimiImmoCorpo
+var Construction
+var AutreImmoCorp
+var DimiConst
+var DimiAutrImmo
+var AutresFinex
+var ConstrucFinex
+var AutreImmoCorpoFinex
+
+Tab2033C=[Autres,DimiImmoCorpo,Construction,AutreImmoCorp,DimiConst,DimiAutrImmo, AutresFinex,ConstrucFinex,AutreImmoCorpoFinex]
+
+
+
 
   console.log("annuité mobilier:" + annuiteMobilier);
   console.log("annuite frais :" + annuiteFrais);
