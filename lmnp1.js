@@ -73,15 +73,18 @@ let amortissement = function () {
   console.log(Math.round(days));
   var DaysYear = 365;
 
-  /* prorata dernière année
+ /* prorata dernière année*/
 
-  var datefin = moment(dateBegin).add(5,"year").calendar();
-  console.log(datefin);
-  /*var duration =
-  var DateDebut=moment(datefin).startOf("year");
-  console.log(DateDebut);*/
-
-
+  var dateFin = moment(dateBegin).add(5,"year").calendar();
+  console.log(dateFin);
+  
+  year = (new Date(dateFin)).getFullYear();
+  startDateOfTheYear = moment([year]);
+    
+  console.log(startDateOfTheYear.format("DD/MM/YYYY"));
+    
+  var durationEnd = moment.durationEnd(dateFin.diff(startDateOfTheYear));
+  console.log(durationEnd);
 
   /* charges externes*/
 
@@ -166,7 +169,7 @@ let amortissement = function () {
     
   var annuiteAscenseur = Math.round(partH * txamortAscenseur);
   var yes = document.querySelector('input[value="oui"]');
-  console.log(yes);
+  
   yes.onchange = function () {
     if (yes.checked) {
       annuiteAscenseur;
@@ -175,6 +178,7 @@ let amortissement = function () {
     }
   };
   console.log(yes.onchange);
+
   let annuiteStructure = Math.round(partA * txamortStructure);
 
   let annuiteMenuiserie = Math.round(partB * txamortMenuiseries);
