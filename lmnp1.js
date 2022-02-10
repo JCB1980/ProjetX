@@ -75,16 +75,19 @@ let amortissement = function () {
 
  /* prorata dernière année*/
 
-  var dateFin = moment(dateBegin).add(5,"year").calendar();
-  console.log(dateFin);
+  var dateFin = moment(dateBegin).add(5,"year");
+  console.log(dateFin.get("year"));;
   
   year = (new Date(dateFin)).getFullYear();
   startDateOfTheYear = moment([year]);
     
   console.log(startDateOfTheYear.format("DD/MM/YYYY"));
     
-  var durationEnd = moment.durationEnd(dateFin.diff(startDateOfTheYear));
+  var durationEnd = moment.duration(dateFin.diff(startDateOfTheYear));
   console.log(durationEnd);
+  var days2 = durationEnd.asDays();
+  console.log(Math.round(days2));
+  var DaysYear = 365;
 
   /* charges externes*/
 
@@ -122,17 +125,23 @@ let amortissement = function () {
 
   var annuiteMobilier = ValeurMobilier * txAmortMobilier;
   var AnnuiteMobProra = Math.round((annuiteMobilier * days) / DaysYear);
+  var AnnMobProrLastYear =Math.round((annuiteMobilier * days2) / DaysYear);
   var VNC1 = ValeurMobilier - AnnuiteMobProra;
   var VNC = VNC1 - annuiteMobilier;
+  var VNCLast = ValeurMobilier-AnnMobProrLastYear;
+
+  console.log(AnnMobProrLastYear);
+  console.log(VNCLast);
   
   /* boucle push*/
 
   const tableauAmorMobilier = [
-    [0,0,ValeurMobilier],
+   /* [0,0,ValeurMobilier],*/
     [Number(dateBegin.format("YYYY")), AnnuiteMobProra, VNC1]
   ];
   for (var i = 1; i < 10; i++) { tableauAmorMobilier.push([ Number(dateBegin.format("YYYY")), annuiteMobilier, VNC ]); }
-  
+  for (var i= 11; i==11;i++){tableauAmorMobilier.push([dateFin,AnnMobProrLastYear, VNCLast])}
+ 
   /* boucle temporel*/
   for (var i = 0; i < tableauAmorMobilier.length; i++) { tableauAmorMobilier[i][0] = tableauAmorMobilier[0][0]+i; }
   
@@ -149,11 +158,12 @@ let amortissement = function () {
     (Number(FraisNotaire) + Number(FraisBancaire) + Number(HonorairesAgence)) *
     txamortFrais;
   var AnnuiteFraisProra = Math.round((annuiteFrais * days) / DaysYear);
+  var AnnFraisLastYear =Math.round((annuiteFrais * days2) / DaysYear);
   var VNC1F = FraisEtablissement - AnnuiteFraisProra;
   var VNC2 = 0
   
   const tableauAmorFrais = [
-    [0,0,FraisEtablissement],
+    /*[0,0,FraisEtablissement],*/
     [Number(dateBegin.format("YYYY")), AnnuiteFraisProra, VNC1F],
   ];
      for (var i = 1; i < 5; i++) {tableauAmorFrais.push([ Number(dateBegin.format("YYYY")), annuiteFrais, VNC2]); }
@@ -212,12 +222,20 @@ let amortissement = function () {
   var annRavalPropra = Math.round((annuiteRavalement * days) / DaysYear);
   var annAscProra = Math.round((annuiteAscenseur * days) / DaysYear);
   
- 
+  var annStrucProrLastYear =Math.round((annuiteStructure * days2) / DaysYear);
+  var annChauProLastYear =Math.round((annuiteChauffage * days2) / DaysYear);
+  var annElecProLastYear =Math.round((annuiteElectricite * days2) / DaysYear);
+  var annEtanProrLastYear =Math.round((annuiteEtancheite * days2) / DaysYear);
+  var annPlomProrLastYear =Math.round((annuitePlomberie * days2) / DaysYear);
+  var annMenProrLastYear =Math.round((annuiteMenuiserie * days2) / DaysYear);
+  var annRavProrLastYear =Math.round((annuiteRavalement * days2) / DaysYear);
+  var annAscProrLastYear =Math.round((annuiteAscenseur* days2) / DaysYear);
+  
   var VNC = valeurDuBien
   sumannuite=0
 
   const tabAmorImmo = [
-    [0,0,0,0,0,0,0,0,0,valeurDuBien],
+    /*[0,0,0,0,0,0,0,0,0,valeurDuBien],*/
     [
     Number(dateBegin.format("YYYY")),
     annStrucProra,
