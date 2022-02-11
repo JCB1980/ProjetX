@@ -270,19 +270,6 @@ yes.onchange = function () {
   for (var i = 0; i < tabAmorImmo.length; i++) { tabAmorImmo[i][0] = tabAmorImmo[0][0]+i; 
 }
 
-  for (var i = 0; i < tabAmorImmo.length; i++) {
-    var somme = 0;
-    var uneAnnee = tabAmorImmo[i];
-    for (var j =1 ;j<=8; j++) { 
-      somme += uneAnnee[j];
-   }
-   uneAnnee[9]=somme
-}
-
-tabAmorImmo[0][10] = valeurDuBien - tabAmorImmo[0][9];
-for (var i = 1; i < tabAmorImmo.length; i++) {
-  tabAmorImmo[i][10] = tabAmorImmo[i-1][10] - tabAmorImmo[i][9];
-}
 for (var i =0;i<tabAmorImmo.length;i++){
   if(i>=16){
 for (var j =1 ;j<8; j++) {
@@ -295,13 +282,26 @@ for (var j =1 ;j<8; j++) {
       tabAmorImmo[i].splice(3,1,0);
       tabAmorImmo[i].splice(4,1,0);
       tabAmorImmo[i].splice(5,1,0);
-  }
-    }
-  }
- } 
-}
-console.table(tabAmorImmo);
+  }}}}}
 
+
+
+  for (var i = 0; i < tabAmorImmo.length; i++) {
+    var somme = 0;
+    var uneAnnee = tabAmorImmo[i];
+    for (var j =1 ;j<=8; j++) { 
+      somme += uneAnnee[j];
+   }
+   uneAnnee[9]=somme
+}
+
+tabAmorImmo[0][10] = valeurDuBien - tabAmorImmo[0][9];
+
+for (var i = 1; i < tabAmorImmo.length; i++) {
+  tabAmorImmo[i][10] = tabAmorImmo[i-1][10] - tabAmorImmo[i][9];
+}
+
+console.table(tabAmorImmo);
 
 /*Déclaration 2033A*/
 
