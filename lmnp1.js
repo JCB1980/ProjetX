@@ -94,7 +94,7 @@ let amortissement = function () {
   const TabCharExt = [];
   var sommeCharge=0;
   
-  for (var i = 0; i < 50; i++) { TabCharExt.push([ Number(dateBegin.format("YYYY")), montantAnnuelLoyer, MontantEmprunt, FraisAministration , FraiLocal, IndemnitésEviction, DépensesTravaux, ChargesLocatives, PrimesAssurances, ProvisionsChargesCopropriété, IntérêtsEtFraisEmprunt, DéductionsSpécifiques,sommeCharge ]); }
+  for (var i = 0; i < 50; i++) { TabCharExt.push([ Number(dateBegin.format("YYYY")), FraisAministration , FraiLocal, IndemnitésEviction, DépensesTravaux, ChargesLocatives, PrimesAssurances, ProvisionsChargesCopropriété, IntérêtsEtFraisEmprunt, DéductionsSpécifiques,sommeCharge ]); }
   
   for (var i = 1; i < TabCharExt.length; i++) { TabCharExt[i][0] = TabCharExt[0][0]+i; }
   
@@ -161,13 +161,15 @@ let amortissement = function () {
   var AnnFraisLastYear =Math.round((annuiteFrais * days2) / DaysYear);
   var VNC1F = FraisEtablissement - AnnuiteFraisProra;
   var VNC2 = 0
+  var VNCLast2 = FraisEtablissement-AnnFraisLastYear;
   
   const tableauAmorFrais = [
     /*[0,0,FraisEtablissement],*/
     [Number(dateBegin.format("YYYY")), AnnuiteFraisProra, VNC1F],
   ];
      for (var i = 1; i < 5; i++) {tableauAmorFrais.push([ Number(dateBegin.format("YYYY")), annuiteFrais, VNC2]); }
-  
+     for (var i= 6; i==6;i++){tableauAmorFrais.push([dateFin,AnnFraisLastYear, VNCLast2])}
+     
      for (var i = 0; i < tableauAmorFrais.length; i++) { tableauAmorFrais[i][0] = tableauAmorFrais[0][0]+i; }
       
     tableauAmorFrais[0][2] = FraisEtablissement - tableauAmorFrais[0][1];
@@ -230,7 +232,7 @@ let amortissement = function () {
   var annMenProrLastYear =Math.round((annuiteMenuiserie * days2) / DaysYear);
   var annRavProrLastYear =Math.round((annuiteRavalement * days2) / DaysYear);
   var annAscProrLastYear =Math.round((annuiteAscenseur* days2) / DaysYear);
-  
+
   var VNC = valeurDuBien
   sumannuite=0
 
@@ -249,7 +251,7 @@ let amortissement = function () {
     sumannuite,
     VNC,
   ]];
-  for (var i = 1; i < 50; i++) { tabAmorImmo.push([ Number(dateBegin.format("YYYY")),
+  for (var i = 1; i < 49; i++) { tabAmorImmo.push([ Number(dateBegin.format("YYYY")),
 annuiteStructure,
 annuiteChauffage,
 annuiteElectricite,
@@ -262,7 +264,7 @@ sumannuite,
 VNC
 ]);
 }
-   
+  for (var i= 50; i==50;i++){tabAmorImmo.push([dateFin,annStrucProrLastYear,annChauProLastYear,annElecProLastYear,annPlomProrLastYear,annEtanProrLastYear,annMenProrLastYear,annRavProrLastYear,annAscProrLastYear])}
   for (var i = 0; i < tabAmorImmo.length; i++) { tabAmorImmo[i][0] = tabAmorImmo[0][0]+i; 
 }
 
@@ -292,7 +294,8 @@ var ImmoIncorBrut = tableauAmorFrais[0][2];
 var ImmoIncorpAmor= tableauAmorFrais[0][1];
 var ImIncNetex = ImmoIncorBrut-ImmoIncorpAmor;
 
-Tab2033A=[ImmoCorpoBrut,ImmoCorpoAmor,ImmoCorpNetex,ImmoIncorBrut,ImmoIncorpAmor,ImIncNetex]
+
+Tab2033A=[ImmoCorpoBrut,ImmoCorpoAmor,ImmoCorpNetex,ImmoIncorBrut,ImmoIncorpAmor,ImIncNetex,MontantEmprunt,montantAnnuelLoyer]
 
 console.table(Tab2033A);
 
