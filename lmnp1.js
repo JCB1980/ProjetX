@@ -182,13 +182,7 @@ let amortissement = function () {
   var annuiteAscenseur = Math.round(partH * txamortAscenseur);
   var yes = document.querySelector('input[value="oui"]');
   
-  yes.onchange = function () {
-    if (yes.checked) {
-      annuiteAscenseur;
-    } else {
-      annuiteAscenseur = 0;
-    }
-  };
+  
   console.log(yes.onchange);
 
   let annuiteStructure = Math.round(partA * txamortStructure);
@@ -243,11 +237,11 @@ let amortissement = function () {
     annStrucProra,
     annChaufProra,
     annElecProra,
-    annEtanProra,
     annPlomProra,
     annMenuiProra,
     annRavalPropra,
     annAscProra,
+    annEtanProra,
     sumannuite,
     VNC,
   ]];
@@ -263,8 +257,16 @@ annuiteAscenseur,
 sumannuite,
 VNC
 ]);
+
+yes.onchange = function () {
+  if (yes.checked) {
+    annuiteAscenseur;
+  } else {
+    annuiteAscenseur = 0;
+  }
+};
 }
-  for (var i= 50; i==50;i++){tabAmorImmo.push([dateFin,annStrucProrLastYear,annChauProLastYear,annElecProLastYear,annPlomProrLastYear,annEtanProrLastYear,annMenProrLastYear,annRavProrLastYear,annAscProrLastYear])}
+  for (var i= 50; i==50;i++){tabAmorImmo.push([dateFin,annStrucProrLastYear,annChauProLastYear,annElecProLastYear,annPlomProrLastYear,annMenProrLastYear,annRavProrLastYear,annEtanProrLastYear,annAscProrLastYear])}
   for (var i = 0; i < tabAmorImmo.length; i++) { tabAmorImmo[i][0] = tabAmorImmo[0][0]+i; 
 }
 
@@ -281,7 +283,23 @@ tabAmorImmo[0][10] = valeurDuBien - tabAmorImmo[0][9];
 for (var i = 1; i < tabAmorImmo.length; i++) {
   tabAmorImmo[i][10] = tabAmorImmo[i-1][10] - tabAmorImmo[i][9];
 }
-
+for (var i =0;i<tabAmorImmo.length;i++){
+  if(i>=16){
+for (var j =1 ;j<8; j++) {
+    tabAmorImmo[i].splice(6,1,0);
+    tabAmorImmo[i].splice(7,1,0);
+    tabAmorImmo[i].splice(8,1,0);
+  if(i>=26){
+    for (var j =1 ;j<8; j++) {
+      tabAmorImmo[i].splice(2,1,0);
+      tabAmorImmo[i].splice(3,1,0);
+      tabAmorImmo[i].splice(4,1,0);
+      tabAmorImmo[i].splice(5,1,0);
+  }
+    }
+  }
+ } 
+}
 console.table(tabAmorImmo);
 
 
@@ -297,7 +315,7 @@ var ImIncNetex = ImmoIncorBrut-ImmoIncorpAmor;
 
 Tab2033A=[ImmoCorpoBrut,ImmoCorpoAmor,ImmoCorpNetex,ImmoIncorBrut,ImmoIncorpAmor,ImIncNetex,MontantEmprunt,montantAnnuelLoyer]
 
-console.table(Tab2033A);
+console.table("2033A:",Tab2033A);
 
 /*Déclaration 2033B*/
 
