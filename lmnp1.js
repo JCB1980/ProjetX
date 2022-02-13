@@ -94,7 +94,7 @@ let amortissement = function () {
   const TabCharExt = [];
   var sommeCharge=0;
   
-  for (var i = 0; i < 50; i++) { TabCharExt.push([ Number(dateBegin.format("YYYY")), FraisAministration , FraiLocal, IndemnitésEviction, DépensesTravaux, ChargesLocatives, PrimesAssurances, ProvisionsChargesCopropriété, IntérêtsEtFraisEmprunt, DéductionsSpécifiques,sommeCharge ]); }
+  for (var i = 0; i < 51; i++) { TabCharExt.push([ Number(dateBegin.format("YYYY")), FraisAministration , FraiLocal, IndemnitésEviction, DépensesTravaux, ChargesLocatives, PrimesAssurances, ProvisionsChargesCopropriété, IntérêtsEtFraisEmprunt, DéductionsSpécifiques,sommeCharge ]); }
   
   for (var i = 1; i < TabCharExt.length; i++) { TabCharExt[i][0] = TabCharExt[0][0]+i; }
   
@@ -113,7 +113,7 @@ let amortissement = function () {
   /*Charges Impôts*/
 
   const TabImpo = [];
-  for (var i = 0; i < 50; i++) { TabImpo.push([ Number(dateBegin.format("YYYY")), Impots ]); }
+  for (var i = 0; i < 51; i++) { TabImpo.push([ Number(dateBegin.format("YYYY")), Impots ]); }
   
    for (var i = 1; i < TabImpo.length; i++) { TabImpo[i][0] = TabImpo[0][0]+i; }
   
@@ -227,25 +227,24 @@ let amortissement = function () {
   var annRavProrLastYear =Math.round((annuiteRavalement * days2) / DaysYear);
   var annAscProrLastYear =Math.round((annuiteAscenseur* days2) / DaysYear);
 
-  var VNC = valeurDuBien
-  sumannuite=0
+  /*var VNC = valeurDuBien*/
+  /*sumannuite=0*/
 
   const tabAmorImmo = [
-    /*[0,0,0,0,0,0,0,0,0,valeurDuBien],*/
-    [
+        [
     Number(dateBegin.format("YYYY")),
     annStrucProra,
     annChaufProra,
     annElecProra,
     annPlomProra,
     annMenuiProra,
+    annEtanProra,
     annRavalPropra,
     annAscProra,
-    annEtanProra,
-    sumannuite,
-    VNC,
+    /*sumannuite,
+    VNC,*/
   ]];
-  for (var i = 1; i < 49; i++) { tabAmorImmo.push([ Number(dateBegin.format("YYYY")),
+  for (var i = 1; i <= 49; i++) { tabAmorImmo.push([ Number(dateBegin.format("YYYY")),
 annuiteStructure,
 annuiteChauffage,
 annuiteElectricite,
@@ -254,8 +253,8 @@ annuiteMenuiserie,
 annuiteEtancheite,
 annuiteRavalement,
 annuiteAscenseur,
-sumannuite,
-VNC
+/*sumannuite,
+VNC*/
 ]);
 
 yes.onchange = function () {
@@ -266,7 +265,7 @@ yes.onchange = function () {
   }
 };
 }
-  for (var i= 50; i==50;i++){tabAmorImmo.push([dateFin,annStrucProrLastYear,annChauProLastYear,annElecProLastYear,annPlomProrLastYear,annMenProrLastYear,annRavProrLastYear,annEtanProrLastYear,annAscProrLastYear])}
+  for (var i= 50; i==50;i++){tabAmorImmo.push([dateFin,annStrucProrLastYear,annChauProLastYear,annElecProLastYear,annPlomProrLastYear,annMenProrLastYear,annEtanProrLastYear,annRavProrLastYear,annAscProrLastYear])}
   for (var i = 0; i < tabAmorImmo.length; i++) { tabAmorImmo[i][0] = tabAmorImmo[0][0]+i; 
 }
 
@@ -283,8 +282,6 @@ for (var j =1 ;j<8; j++) {
       tabAmorImmo[i].splice(4,1,0);
       tabAmorImmo[i].splice(5,1,0);
   }}}}}
-
-
 
   for (var i = 0; i < tabAmorImmo.length; i++) {
     var somme = 0;
@@ -317,15 +314,15 @@ Tab2033A=[ImmoCorpoBrut,ImmoCorpoAmor,ImmoCorpNetex,ImmoIncorBrut,ImmoIncorpAmor
 
 console.table("2033A:",Tab2033A);
 
-/*Déclaration 2033B*/
+/*Déclaration 2033B
 
-var Prod
-var CharExt
-var Imp
-var DotAmor
+var Serv = montantAnnuelLoyer;
+var CharExt = TabCharExt;
+var ImpTaxes=TabImpo;
+var DotAmor=
 var DefiAntRepo
 
-Tab2033B =[Prod,CharExt,Imp,DotAmor,DefiAntRepo]
+Tab2033B =[Prod,CharExt,Imp,DotAmor,DefiAntRepo]*/
 
 /*Déclaration 2033C*/
 
