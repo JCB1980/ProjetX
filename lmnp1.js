@@ -13,11 +13,14 @@ let amortissement = function () {
   let ChargesLocatives = Number(document.querySelector("#A12").value);
   let Impots = Number(document.querySelector("#A13").value);
   let PrimesAssurances = Number(document.querySelector("#A14").value);
-  let ProvisionsChargesCopropriété = Number(
-    document.querySelector("#A15").value
-  );
+  let ProvisionsChargesCopropriété = Number(document.querySelector("#A15").value);
   let IntérêtsEtFraisEmprunt = Number(document.querySelector("#A16").value);
   let DéductionsSpécifiques = Number(document.querySelector("#A17").value);
+  
+var coche = function(){
+    let selectAsc = document.getElementById("A18").value;
+  }
+console.log(coche);
 
   const txAmortMobilier = 0.1;
   const txamortFrais = 0.2;
@@ -133,10 +136,17 @@ let amortissement = function () {
   console.log(AnnMobProrLastYear);
   console.log(VNCLast);
   
-  /* boucle push*/
+  function coche(){
+    if(document.getElementById("#A18").checked) {
+        annuiteAscenseur
+    }
+    else{
+     annuiteAscenseur=0
+  }};
+
+  console.log(coche);
 
   const tableauAmorMobilier = [
-   /* [0,0,ValeurMobilier],*/
     [Number(dateBegin.format("YYYY")), AnnuiteMobProra, VNC1]
   ];
   for (var i = 1; i < 10; i++) { tableauAmorMobilier.push([ Number(dateBegin.format("YYYY")), annuiteMobilier, VNC ]); }
@@ -180,11 +190,7 @@ let amortissement = function () {
     
     
   var annuiteAscenseur = Math.round(partH * txamortAscenseur);
-  var yes = document.querySelector('input[value="oui"]');
   
-  
-  console.log(yes.onchange);
-
   let annuiteStructure = Math.round(partA * txamortStructure);
 
   let annuiteMenuiserie = Math.round(partB * txamortMenuiseries);
@@ -227,8 +233,9 @@ let amortissement = function () {
   var annRavProrLastYear =Math.round((annuiteRavalement * days2) / DaysYear);
   var annAscProrLastYear =Math.round((annuiteAscenseur* days2) / DaysYear);
 
-  /*var VNC = valeurDuBien*/
-  /*sumannuite=0*/
+  var yes = document.querySelector('input[value="oui"]');
+  console.log(yes.onchange);
+
 
   const tabAmorImmo = [
         [
@@ -257,13 +264,6 @@ annuiteAscenseur,
 VNC*/
 ]);
 
-yes.onchange = function () {
-  if (yes.checked) {
-    annuiteAscenseur;
-  } else {
-    annuiteAscenseur = 0;
-  }
-};
 }
   for (var i= 50; i==50;i++){tabAmorImmo.push([dateFin,annStrucProrLastYear,annChauProLastYear,annElecProLastYear,annPlomProrLastYear,annMenProrLastYear,annEtanProrLastYear,annRavProrLastYear,annAscProrLastYear])}
   for (var i = 0; i < tabAmorImmo.length; i++) { tabAmorImmo[i][0] = tabAmorImmo[0][0]+i; 
