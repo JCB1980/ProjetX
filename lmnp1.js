@@ -1,39 +1,23 @@
 let amortissement = function () {
-  let valeurDuBien = 240000;
-  let montantAnnuelLoyer = 9000;
-  let honorairesAgence = 5000;
-  let fraisNotaire = 5000;
-  let fraisBancaire = 500;
-  let valeurMobilier = 10000;
-  let montantEmprunt = 200000;
-  let fraisAministration = 500;
-  let fraisLocal = 20;
-  let indemnitesEviction = 200;
-  let depensesTravaux = 900;
-  let chargesLocatives = 750;
-  let impots = 800;
-  let primesAssurances = 250;
-  let provisionsChargesCopropriete = 200;
-  let interetsEtFraisEmprunt = 2500;
-  let deductionsSpecifiques = 700;
-
-  /*let valeurDuBien = document.querySelector("#A1").value;
-  let montantAnnuelLoyer = Number(document.querySelector("#A2").value);
-  let honorairesAgence = document.querySelector("#A3").value;
-  let fraisNotaire = document.querySelector("#A4").value;
-  let fraisBancaire = document.querySelector("#A5").value;
-  let valeurMobilier = document.querySelector("#A6").value;
+  let valeurDuBien = Number((document.querySelector("#A1").value = 240000));
+  let valeurMobilier = Number((document.querySelector("#A6").value = 9000));
+  let honorairesAgence = Number((document.querySelector("#A3").value = 5000));
+  let fraisNotaire = Number((document.querySelector("#A4").value = 5000));
+  let fraisBancaire = Number((document.querySelector("#A5").value = 500));
+  let montantAnnuelLoyer = Number((document.querySelector("#A2").value = 9000));
   let montantEmprunt = Number(document.querySelector("#A7").value);
   let fraisAministration = Number(document.querySelector("#A8").value);
-  let fraisLocal = 20; 
+  let fraisLocal = 20;
   let indemnitesEviction = Number(document.querySelector("#A10").value);
-  let depensesTravaux = Number(document.querySelector("#A11").value);
+  let depensesTravaux = Number((document.querySelector("#A11").value = 900));
   let chargesLocatives = Number(document.querySelector("#A12").value);
-  let impots = Number(document.querySelector("#A13").value);
+  let impots = Number((document.querySelector("#A13").value = 750));
   let primesAssurances = Number(document.querySelector("#A14").value);
-  let provisionsChargesCopropriete = Number(document.querySelector("#A15").value);
+  let provisionsChargesCopropriete = Number(
+    document.querySelector("#A15").value
+  );
   let interetsEtFraisEmprunt = Number(document.querySelector("#A16").value);
-  let deductionsSpecifiques = Number(document.querySelector("#A17").value);*/
+  let deductionsSpecifiques = Number(document.querySelector("#A17").value);
 
   const TX_AMORT_MOBILIER = 0.1;
   const TX_AMOR_FRAIS = 0.2;
@@ -133,10 +117,10 @@ let amortissement = function () {
   for (var i = 0; i < TAB_CHAR_EXT.length; i++) {
     var somme = 0;
     var uneAnnee = TAB_CHAR_EXT[i];
-    for (var j = 1; j <= 11; j++) {
+    for (var j = 1; j <= 10; j++) {
       somme += uneAnnee[j];
     }
-    uneAnnee[12] = somme;
+    uneAnnee[11] = somme;
   }
 
   console.table(TAB_CHAR_EXT);
@@ -186,7 +170,7 @@ let amortissement = function () {
   TAB_AMORT_MOBILIER[0][2] = valeurMobilier - TAB_AMORT_MOBILIER[0][1];
 
   for (var i = 1; i < TAB_AMORT_MOBILIER.length; i++) {
-    TAB_CHAR_EXT[i][2] =
+    TAB_AMORT_MOBILIER[i][2] =
       TAB_AMORT_MOBILIER[i - 1][2] - TAB_AMORT_MOBILIER[i][1];
   }
   console.table(TAB_AMORT_MOBILIER);
@@ -226,7 +210,9 @@ let amortissement = function () {
 
   /*Amortissement immobilier*/
 
-  var annuiteAscenseur = Math.round(partH * TX_AMORT_ASCEN);
+  var annuiteAscenseur = document.getElementById("A18").checked
+    ? Math.round(partH * TX_AMORT_ASCEN)
+    : 0;
 
   var annuiteStructure = Math.round(partA * TX_AMORT_STRUCTURE);
 
@@ -283,7 +269,7 @@ let amortissement = function () {
       annAscProra,
     ],
   ];
-  for (var i = 1; i <= 49; i++) {
+  for (var i = 1; i < 50; i++) {
     TAB_AMOR_IMMO.push([
       Number(dateBegin.format("YYYY")),
       annuiteStructure,
@@ -308,14 +294,6 @@ let amortissement = function () {
       annRavProrLastYear,
       annAscProrLastYear,
     ]);
-  }
-
-  for (i = 0; i < TAB_AMOR_IMMO.length; i++) {
-    if (document.getElementById("#18").checked) {
-      annuiteAscenseur;
-    } else {
-      annuiteAscenseur = 0;
-    }
   }
 
   for (var i = 0; i < TAB_AMOR_IMMO.length; i++) {
@@ -413,11 +391,7 @@ Tab2033B =[Prod,CharExt,Imp,DotAmor,DefiAntRepo]*/
     AutreImmoCorpoFinex,
   ];
 
-  console.log("annuité mobilier:" + annuiteMobilier);
-  console.log("annuite frais :" + annuiteFrais);
-  console.log("Annuité immobilier:" + annuiteImmobilier);
-
-  document.getElementById("annuiteImmobilier").innerHTML = annuiteImmobilier;
-  document.getElementById("annuiteFrais").innerHTML = annuiteFrais;
+  document.getElementById("TAB_AMOR_IMMO").innerHTML = TAB_AMOR_IMMO;
+  document.getElementById("TAB_AM").innerHTML = annuiteFrais;
   document.getElementById("annuiteMobilier").innerHTML = annuiteMobilier;
 };

@@ -309,7 +309,8 @@ let amortissement = function () {
 
   for (var i = 0; i < tabAmorImmo.length; i++) {
     if (i >= 16) {
-      tabAmorImmo.annuiteEtanch = 0;
+      delete tabAmorImmo.annuiteEtanch; /*ou tabAmorImmo.annuiteEtanch=0*/
+      delete tabAmorImmo.annuiteRava;
     }
   }
 
