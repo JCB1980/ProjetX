@@ -270,17 +270,6 @@ let amortissement = function () {
   var annRavProrLastYear = Math.round((annuiteRavalement * days2) / daysYear);
   var annAscProrLastYear = Math.round((annuiteAscenseur * days2) / daysYear);
 
-  /* function choix() {
-    var checkbox = document.getElementById("#18");
-    if (checkbox.checked == true) {
-      annuiteAscenseur;
-    } else {
-      annuiteAscenseur = 0;
-    }
-  }
-
-  console.log("choix", choix());*/
-
   const TAB_AMOR_IMMO = [
     [
       Number(dateBegin.format("YYYY")),
@@ -319,6 +308,14 @@ let amortissement = function () {
       annRavProrLastYear,
       annAscProrLastYear,
     ]);
+  }
+
+  for (i = 0; i < TAB_AMOR_IMMO.length; i++) {
+    if (document.getElementById("#18").checked) {
+      annuiteAscenseur;
+    } else {
+      annuiteAscenseur = 0;
+    }
   }
 
   for (var i = 0; i < TAB_AMOR_IMMO.length; i++) {
