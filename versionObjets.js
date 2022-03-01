@@ -70,7 +70,7 @@ let amortissement = function () {
   console.log("Date de début d'activité", dateBegin.format("DD/MM/YYYY"));
 
   var dateEnd = moment().endOf("year");
-  console.log("Date e fin d'activité", dateEnd.format("DD/MM/YYYY"));
+  console.log("Date de fin d'activité", dateEnd.format("DD/MM/YYYY"));
 
   var duration = moment.duration(dateEnd.diff(dateBegin));
   var days = duration.asDays();
@@ -138,7 +138,7 @@ let amortissement = function () {
     });
   }
   tabAmortissementMob.push({
-    annee: dateFin,
+    annee: Number(dateFin.format("YYYY")) + 5,
     annuiteMobilier: annMobProrLastYear,
     vnc: vncLast,
   });
@@ -181,7 +181,7 @@ let amortissement = function () {
     });
   }
   tabAmorFrais.push({
-    annee: dateFin,
+    annee: Number(dateFin.format("YYYY")),
     annuiteFrais: annFraisLastYear,
     vnc: vncLast2,
   });
@@ -295,7 +295,7 @@ let amortissement = function () {
   }
 
   tabAmorImmo.push({
-    annee: dateFin,
+    annee: Number(dateFin.format("YYYY")) + 45,
     annuiteStrucLY: annStrucProrLastYear,
     annuiteChauLY: annChauProLastYear,
     annuiteElecLY: annElecProLastYear,
@@ -307,12 +307,6 @@ let amortissement = function () {
     vncLastYear: vncLast,
   });
 
-  for (var i = 0; i < tabAmorImmo.length; i++) {
-    if (i >= 16) {
-      tabAmorImmo.annuiteRava = 0;
-    }
-  }
-
   tabAmorImmo[2].vncImmoAnnuel =
     tabAmorImmo[1].vncImmoAnnuel - tabAmorImmo[2].annuiteTotale;
 
@@ -320,10 +314,33 @@ let amortissement = function () {
     tabAmorImmo[i].vncImmoAnnuel =
       tabAmorImmo[i - 1].vncImmoAnnuel - tabAmorImmo[i].annuiteTotale;
   }
-  console.log(tabAmorImmo);
+
+  for (var i = 0; i < tabAmorImmo.length; i++) {
+    if ((i = 16)) {
+      tabAmorImmo.annuiteEtanch = 0;
+    }
+  }
+  console.table(tabAmorImmo);
 };
 
 /*Déclaration 2033A
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
 
   var immoCorpoBrut = TAB_AMOR_IMMO[0][10] + TAB_AMORT_MOBILIER[0][2];
   var immoCorpoAmor = TAB_AMOR_IMMO[0][9] + TAB_AMORT_MOBILIER[0][1];
