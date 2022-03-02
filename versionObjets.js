@@ -214,15 +214,24 @@ let amortissement = function () {
 
   var annuitePlomberie = Math.round(partG * TX_AMORT_PLOMB);
 
-  var annuiteImmobilier =
+  var annuitePeriode2 =
+    annuiteStructure +
+    annuiteChauffage +
+    annuiteElectricite +
+    annuiteEtancheite +
+    annuitePlomberie +
+    annuiteMenuiserie +
+    annuiteRavalement +
+    annuiteAscenseur;
+
+  var annuitePeriode3 =
     Number(annuiteStructure) +
     Number(annuiteChauffage) +
     Number(annuiteElectricite) +
-    Number(annuiteEtancheite) +
     Number(annuitePlomberie) +
-    Number(annuiteMenuiserie) +
-    Number(annuiteRavalement) +
-    Number(annuiteAscenseur);
+    Number(annuiteMenuiserie);
+
+  var annuitePeriode4 = Number(annuiteStructure);
 
   var annStrucProra = Math.round((annuiteStructure * days) / daysYear);
   var annChaufProra = Math.round((annuiteChauffage * days) / daysYear);
@@ -243,26 +252,14 @@ let amortissement = function () {
     annAscProra;
 
   var annStrucProrLastYear = Math.round((annuiteStructure * days2) / daysYear);
-  var annChauProLastYear = Math.round((annuiteChauffage * days2) / daysYear);
-  var annElecProLastYear = Math.round((annuiteElectricite * days2) / daysYear);
-  var annEtanProrLastYear = Math.round((annuiteEtancheite * days2) / daysYear);
-  var annPlomProrLastYear = Math.round((annuitePlomberie * days2) / daysYear);
-  var annMenProrLastYear = Math.round((annuiteMenuiserie * days2) / daysYear);
-  var annRavProrLastYear = Math.round((annuiteRavalement * days2) / daysYear);
-  var annAscProrLastYear = Math.round((annuiteAscenseur * days2) / daysYear);
-  var sommeAnnProraLastYear =
-    annStrucProrLastYear +
-    annChauProLastYear +
-    annElecProLastYear +
-    annEtanProrLastYear +
-    annPlomProrLastYear +
-    annMenProrLastYear +
-    annRavProrLastYear +
-    annAscProrLastYear;
 
-  var vncAnne1 = valeurDuBien - sommeAnnuiteProra;
-  var vncImmo = vncAnne1 - annuiteImmobilier;
-  var vncLast = valeurDuBien - sommeAnnProraLastYear;
+  var sommeAnnProraLastYear = annStrucProrLastYear;
+
+  /*var vncPeriode1 = valeurDuBien - sommeAnnuiteProra;
+  var vncPeriode2 = vncPeriode1 - annuitePeriode2;
+  var vncPeriode3 = vncPeriode2 - annuitePeriode3;
+  var vncPeriode4 = vncPeriode3 - annuitePeriode4;
+  var vncLast = valeurDuBien - sommeAnnProraLastYear;*/
 
   const tabAmorImmo = [];
   tabAmorImmo.push({
@@ -275,10 +272,10 @@ let amortissement = function () {
     annuiteEtaPro: annEtanProra,
     annuiteRavPr: annRavalPropra,
     annuiteAscPro: annAscProra,
-    vncAnnee1Immo: vncAnne1,
+    sommeAnnProra: sommeAnnuiteProra,
+    vncPer1: 0,
   });
-
-  for (var i = 1; i < 50; i++) {
+  for (var i = 1; i < 16; i++) {
     tabAmorImmo.push({
       annee: Number(dateBegin.format("YYYY")) + i,
       annuiteStruct: annuiteStructure,
@@ -289,38 +286,48 @@ let amortissement = function () {
       annuiteEtanch: annuiteEtancheite,
       annuiteRava: annuiteRavalement,
       annuiteAsc: annuiteAscenseur,
-      annuiteTotale: annuiteImmobilier,
-      vncImmoAnnuel: vncImmo,
+      sommme1: annuitePeriode2,
+      vncPer2: 0,
+    });
+  }
+  for (var i = 16; i < 26; i++) {
+    tabAmorImmo.push({
+      annee: Number(dateBegin.format("YYYY")) + i,
+      annuiteStruct: annuiteStructure,
+      annuiteChauf: annuiteChauffage,
+      annuiteElec: annuiteElectricite,
+      annuitePlom: annuitePlomberie,
+      annuiteMenui: annuiteMenuiserie,
+      somme2: annuitePeriode3,
+      vncPer3: 0,
+    });
+  }
+  for (var i = 26; i < 50; i++) {
+    tabAmorImmo.push({
+      annee: Number(dateBegin.format("YYYY")) + i,
+      annuiteStruct: annuiteStructure,
+      somme3: annuitePeriode4,
+      vncPer4: 0,
     });
   }
 
   tabAmorImmo.push({
     annee: Number(dateFin.format("YYYY")) + 45,
     annuiteStrucLY: annStrucProrLastYear,
-    annuiteChauLY: annChauProLastYear,
-    annuiteElecLY: annElecProLastYear,
-    annuitePlomLY: annPlomProrLastYear,
-    annuiteMenLY: annMenProrLastYear,
-    annuiteEtanLY: annEtanProrLastYear,
-    annuiteRavLY: annRavProrLastYear,
-    annuiteAscLY: annAscProrLastYear,
-    vncLastYear: vncLast,
+    vncLastYear: 0,
+    sommeLast: annStrucProrLastYear,
   });
 
-  tabAmorImmo[2].vncImmoAnnuel =
-    tabAmorImmo[1].vncImmoAnnuel - tabAmorImmo[2].annuiteTotale;
+  tabAmorImmo[0].vncPer1 = valeurDuBien - tabAmorImmo[0].sommeAnnProra;
 
-  for (var i = 2; i < tabAmorImmo.length; i++) {
-    tabAmorImmo[i].vncImmoAnnuel =
-      tabAmorImmo[i - 1].vncImmoAnnuel - tabAmorImmo[i].annuiteTotale;
-  }
+  tabAmorImmo[1].vncPer2 = tabAmorImmo[0].vncPer1 - tabAmorImmo[1].somme1;
 
-  for (var i = 0; i < tabAmorImmo.length; i++) {
-    if ((i = 16)) {
-      tabAmorImmo.annuiteEtanch = 0;
-    }
-  }
+  /*for (var i = 1; i < tabAmorImmo.lenght; i++) {
+    tabAmorImmo[i].vncPer2 = tabAmorImmo[i - 1].vncPer1 - tabAmorImmo[i].somme1;
+  }*/
+
   console.table(tabAmorImmo);
+  console.log(tabAmorImmo);
 };
 
 /*Déclaration 2033A
