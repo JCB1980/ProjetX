@@ -1,4 +1,4 @@
-let amortissement = function () {
+let calcul = function () {
   let valeurDuBien = Number((document.querySelector("#A1").value = 240000));
   let valeurMobilier = Number((document.querySelector("#A6").value = 9000));
   let honorairesAgence = Number((document.querySelector("#A3").value = 5000));
@@ -129,6 +129,7 @@ let amortissement = function () {
     annee: Number(dateBegin.format("YYYY")),
     annuiteMobilier: annuiteMobProra,
     vnc: vnc1,
+    valeurBrute: valeurMobilier,
   });
   for (var i = 1; i < 10; i++) {
     tabAmortissementMob.push({
@@ -171,6 +172,7 @@ let amortissement = function () {
     annee: Number(dateBegin.format("YYYY")),
     annuiteFrais: annuiteFraisProra,
     vnc: vnc1f,
+    valeurBrute: fraisEtablissement,
   });
 
   for (var i = 1; i < 5; i++) {
@@ -273,6 +275,7 @@ let amortissement = function () {
     annuiteRavPr: annRavalPropra,
     annuiteAscPro: annAscProra,
     sommeAnnProra: sommeAnnuiteProra,
+    valeurBrute: valeurDuBien,
     vncPer1: 0,
   });
   for (var i = 1; i < 16; i++) {
@@ -330,46 +333,41 @@ let amortissement = function () {
   console.log(tabAmorImmo);
 };
 
-/*Déclaration 2033A
+/*Tâches :
+  Coder une Fonction déclaration qui va récupérer les données de la fonction calcul 
+  Donner la possibilité à l'utilisateur de sélectionner l'année de déclaration
+*/
 
+/*Déclaration 2033A*/
 
-
-
-
-
-
-
-
-
-
-
-
-
-
-
-
-
-  var immoCorpoBrut = TAB_AMOR_IMMO[0][10] + TAB_AMORT_MOBILIER[0][2];
-  var immoCorpoAmor = TAB_AMOR_IMMO[0][9] + TAB_AMORT_MOBILIER[0][1];
+var immoCorBrut =
+  tabAmorImmo[0].valeurBrute + tabAmortissementMob[0].valeurBrute;
+console.log(immoCorBrut);
+/*var immoCorpoAmor = TAB_AMOR_IMMO[0][9] + TAB_AMORT_MOBILIER[0][1];
   var immoCorpNetex = immoCorpoBrut - immoCorpoAmor;
   var immoIncorBrut = TAB_AMOR_FRAIS[0][2];
   var immoIncorpAmor = TAB_AMOR_FRAIS[0][1];
-  var imIncNetex = immoIncorBrut - immoIncorpAmor;
+  var imIncNetex = immoIncorBrut - immoIncorpAmor;*/
 
-  Tab2033A = [
-    immoCorpoBrut,
-    immoCorpoAmor,
-    immoCorpNetex,
-    immoIncorBrut,
-    immoIncorpAmor,
-    imIncNetex,
-    montantEmprunt,
-    montantAnnuelLoyer,
-  ];
+Decl2033A = [];
+Decl2033A.push({
+  immoCorpoBrut: immoCorBrut,
+  /*immoCorpoAmor: tabAmorimmo[0].sommeAnnProra,
+  immoCorpNetex: tabAmorImmo[0].vncPer1,*/
+});
 
-  console.table("2033A:", Tab2033A);
+console.log(Decl2033A);
 
-  Déclaration 2033B
+/*immoIncorBrut:
+    immoIncorpAmor:
+    imIncNetex:
+    Emprunt: montantEmprunt,
+    montantAnnuelLoyer:
+    )}*/
+
+console.table("2033A:", Tab2033A);
+
+/*Déclaration 2033B
 
 var Serv = montantAnnuelLoyer;
 var CharExt = TabCharExt;
@@ -379,7 +377,7 @@ var DefiAntRepo
 
 Tab2033B =[Prod,CharExt,Imp,DotAmor,DefiAntRepo]
 
-  Déclaration 2033C
+/*Déclaration 2033C
 
   var Autres;
   var DimiImmoCorpo;

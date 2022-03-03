@@ -283,17 +283,7 @@ let amortissement = function () {
     ]);
   }
   for (var i = 50; i == 50; i++) {
-    TAB_AMOR_IMMO.push([
-      dateFin,
-      annStrucProrLastYear,
-      annChauProLastYear,
-      annElecProLastYear,
-      annPlomProrLastYear,
-      annMenProrLastYear,
-      annEtanProrLastYear,
-      annRavProrLastYear,
-      annAscProrLastYear,
-    ]);
+    TAB_AMOR_IMMO.push([dateFin, annStrucProrLastYear]);
   }
 
   for (var i = 0; i < TAB_AMOR_IMMO.length; i++) {
