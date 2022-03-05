@@ -226,6 +226,8 @@ let calcul = function () {
     annuiteRavalement +
     annuiteAscenseur;
 
+  console.log(annuitePeriode2);
+
   var annuitePeriode3 =
     Number(annuiteStructure) +
     Number(annuiteChauffage) +
@@ -289,7 +291,7 @@ let calcul = function () {
       annuiteEtanch: annuiteEtancheite,
       annuiteRava: annuiteRavalement,
       annuiteAsc: annuiteAscenseur,
-      sommme1: annuitePeriode2,
+      somme1: annuitePeriode2,
       vncPer2: 0,
     });
   }
@@ -322,9 +324,12 @@ let calcul = function () {
   });
 
   tabAmorImmo[0].vncPer1 = valeurDuBien - tabAmorImmo[0].sommeAnnProra;
+  console.log(tabAmorImmo[0].vncPer1);
 
   tabAmorImmo[1].vncPer2 = tabAmorImmo[0].vncPer1 - tabAmorImmo[1].somme1;
 
+  console.log(tabAmorImmo[1].somme1);
+  console.log(tabAmorImmo[1].vncPer2);
   /*for (var i = 1; i < tabAmorImmo.lenght; i++) {
     tabAmorImmo[i].vncPer2 = tabAmorImmo[i - 1].vncPer1 - tabAmorImmo[i].somme1;
   }*/
