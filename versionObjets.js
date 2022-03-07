@@ -22,46 +22,8 @@ let calcul = function () {
   let deductionsSpecifiques = Number(
     (document.querySelector("#A17").value = 700)
   );
-
   const TX_AMORT_MOBILIER = 0.1;
   const TX_AMOR_FRAIS = 0.2;
-  const TX_AMORT_STRUCTURE = 0.02;
-  const TX_AMORT_MENUISERIES = 0.04;
-  const TX_AMORT_CHAUFFAGE = 0.04;
-  const TX_AMORT_ETANCHEITE = 0.07;
-  const TX_AMORT_RAVAL = 0.07;
-  const TX_AMORT_ELEC = 0.04;
-  const TX_AMORT_PLOMB = 0.04;
-  const TX_AMORT_ASCEN = 0.04;
-
-  const DUREE_AMORT_MOBILIER = 11;
-  const DUREE_AMORT_FRAIS = 6;
-  const DUREE_AMORT_STRUC = 51;
-  const DUREE_AMORT_MENUI = 26;
-  const DUREE_AMORT_CHAUFF = 26;
-  const DUREE_AMORT_ETANCH = 16;
-  const DUREE_AMORT_RAVAL = 16;
-  const DUREE_AMORT_ELEC = 26;
-  const DUREE_AMORT_PLOMB = 26;
-  const DUREE_AMORT_ASC = 15;
-
-  const TX_REP_STRUCT = 0.824;
-  const TX_REP_MENUI = 0.034;
-  const TX_REP_CHAUFF = 0.032;
-  const TX_REP_ETAN = 0.01;
-  const TX_REP_RAVAL = 0.021;
-  const TX_REP_ELECT = 0.042;
-  const TX_REP_PLOM = 0.037;
-  const TX_REP_ASCE = 0.028;
-
-  let partA = valeurDuBien * TX_REP_STRUCT;
-  let partB = valeurDuBien * TX_REP_MENUI;
-  let partC = valeurDuBien * TX_REP_CHAUFF;
-  let partD = valeurDuBien * TX_REP_ETAN;
-  let partE = valeurDuBien * TX_REP_RAVAL;
-  let partF = valeurDuBien * TX_AMORT_ELEC;
-  let partG = valeurDuBien * TX_AMORT_PLOMB;
-  let partH = valeurDuBien * TX_REP_ASCE;
 
   /* calcul du prorata*/
 
@@ -198,121 +160,97 @@ let calcul = function () {
 
   /*Amortissement immobilier*/
 
-  var annuiteAscenseur = document.getElementById("A18").checked
-    ? Math.round(partH * TX_AMORT_ASCEN)
-    : 0;
+  const TX_AMOR_GROS_OEUVRE = 0.02;
+  const TX_AMOR_FACADE = 0.0333;
+  const TX_AMOR_EQUIPEMENT = 0.05;
+  const TX_AMOR_AGENCEMENT = 0.0667;
 
-  var annuiteStructure = Math.round(partA * TX_AMORT_STRUCTURE);
+  const TX_REP_GROS_OEUVRE = 0.4;
+  const TX_REP_FACADE = 0.2;
+  const TX_REP_EQUIPEMENT = 0.2;
+  const TX_REP_AGENCEMENT = 0.2;
 
-  var annuiteMenuiserie = Math.round(partB * TX_AMORT_MENUISERIES);
+  let partA = valeurDuBien * TX_REP_GROS_OEUVRE;
+  let partB = valeurDuBien * TX_REP_FACADE;
+  let partC = valeurDuBien * TX_REP_EQUIPEMENT;
+  let partD = valeurDuBien * TX_REP_AGENCEMENT;
 
-  var annuiteChauffage = Math.round(partC * TX_AMORT_CHAUFFAGE);
+  console.log(partA, partB, partC, partD);
 
-  var annuiteEtancheite = Math.round(partD * TX_AMORT_ETANCHEITE);
-
-  var annuiteRavalement = Math.round(partE * TX_AMORT_RAVAL);
-
-  var annuiteElectricite = Math.round(partF * TX_AMORT_ELEC);
-
-  var annuitePlomberie = Math.round(partG * TX_AMORT_PLOMB);
+  var annuiteGrosOeuvre = Math.round(partA * TX_AMOR_GROS_OEUVRE);
+  var annuiteFacade = Math.round(partB * TX_AMOR_FACADE);
+  var annuiteEquipement = Math.round(partC * TX_AMOR_EQUIPEMENT);
+  var annuiteAgencement = Math.round(partD * TX_AMOR_AGENCEMENT);
 
   var annuitePeriode2 =
-    annuiteStructure +
-    annuiteChauffage +
-    annuiteElectricite +
-    annuiteEtancheite +
-    annuitePlomberie +
-    annuiteMenuiserie +
-    annuiteRavalement +
-    annuiteAscenseur;
+    annuiteGrosOeuvre + annuiteFacade + annuiteEquipement + annuiteAgencement;
 
-  console.log(annuitePeriode2);
+  var annuitePeriode3 = annuiteGrosOeuvre + annuiteFacade + annuiteEquipement;
 
-  var annuitePeriode3 =
-    Number(annuiteStructure) +
-    Number(annuiteChauffage) +
-    Number(annuiteElectricite) +
-    Number(annuitePlomberie) +
-    Number(annuiteMenuiserie);
+  var annuitePeriode4 = annuiteGrosOeuvre + annuiteFacade;
 
-  var annuitePeriode4 = Number(annuiteStructure);
+  var annuitePeriode5 = annuiteGrosOeuvre;
 
-  var annStrucProra = Math.round((annuiteStructure * days) / daysYear);
-  var annChaufProra = Math.round((annuiteChauffage * days) / daysYear);
-  var annElecProra = Math.round((annuiteElectricite * days) / daysYear);
-  var annEtanProra = Math.round((annuiteEtancheite * days) / daysYear);
-  var annPlomProra = Math.round((annuitePlomberie * days) / daysYear);
-  var annMenuiProra = Math.round((annuiteMenuiserie * days) / daysYear);
-  var annRavalPropra = Math.round((annuiteRavalement * days) / daysYear);
-  var annAscProra = Math.round((annuiteAscenseur * days) / daysYear);
+  var annGrosProra = Math.round((annuiteGrosOeuvre * days) / daysYear);
+  var annFacadeProra = Math.round((annuiteFacade * days) / daysYear);
+  var annEquiProra = Math.round((annuiteEquipement * days) / daysYear);
+  var annAgenProra = Math.round((annuiteAgencement * days) / daysYear);
+
   var sommeAnnuiteProra =
-    annStrucProra +
-    annChaufProra +
-    annElecProra +
-    annEtanProra +
-    annPlomProra +
-    annMenuiProra +
-    annRavalPropra +
-    annAscProra;
+    annGrosProra + annFacadeProra + annEquiProra + annAgenProra;
 
-  var annStrucProrLastYear = Math.round((annuiteStructure * days2) / daysYear);
+  var annStrucProrLastYear = Math.round((annuiteGrosOeuvre * days2) / daysYear);
 
   var sommeAnnProraLastYear = annStrucProrLastYear;
-
-  /*var vncPeriode1 = valeurDuBien - sommeAnnuiteProra;
-  var vncPeriode2 = vncPeriode1 - annuitePeriode2;
-  var vncPeriode3 = vncPeriode2 - annuitePeriode3;
-  var vncPeriode4 = vncPeriode3 - annuitePeriode4;
-  var vncLast = valeurDuBien - sommeAnnProraLastYear;*/
 
   const tabAmorImmo = [];
   tabAmorImmo.push({
     annee: Number(dateBegin.format("YYYY")),
-    annuiteStPro: annStrucProra,
-    annuiteChauPro: annChaufProra,
-    annuiteElecPro: annElecProra,
-    annuitePloPro: annPlomProra,
-    annuiteMenPro: annMenuiProra,
-    annuiteEtaPro: annEtanProra,
-    annuiteRavPr: annRavalPropra,
-    annuiteAscPro: annAscProra,
+    annuiteGrosPro: annGrosProra,
+    annuiteFacadePro: annFacadeProra,
+    annuiteEquipPro: annEquiProra,
+    annuiteAgenPro: annAgenProra,
     sommeAnnProra: sommeAnnuiteProra,
     valeurBrute: valeurDuBien,
     vncPer1: 0,
   });
-  for (var i = 1; i < 16; i++) {
+  for (var i = 1; i < 15; i++) {
     tabAmorImmo.push({
       annee: Number(dateBegin.format("YYYY")) + i,
-      annuiteStruct: annuiteStructure,
-      annuiteChauf: annuiteChauffage,
-      annuiteElec: annuiteElectricite,
-      annuitePlom: annuitePlomberie,
-      annuiteMenui: annuiteMenuiserie,
-      annuiteEtanch: annuiteEtancheite,
-      annuiteRava: annuiteRavalement,
-      annuiteAsc: annuiteAscenseur,
-      somme1: annuitePeriode2,
+      annuiteGros: annuiteGrosOeuvre,
+      annuiteFac: annuiteFacade,
+      annuiteEquip: annuiteEquipement,
+      annuiteAgen: annuiteAgencement,
+      sommePer2: annuitePeriode2,
       vncPer2: 0,
     });
   }
-  for (var i = 16; i < 26; i++) {
+  for (var i = 15; i < 20; i++) {
     tabAmorImmo.push({
       annee: Number(dateBegin.format("YYYY")) + i,
-      annuiteStruct: annuiteStructure,
-      annuiteChauf: annuiteChauffage,
-      annuiteElec: annuiteElectricite,
-      annuitePlom: annuitePlomberie,
-      annuiteMenui: annuiteMenuiserie,
-      somme2: annuitePeriode3,
+      annuiteGros: annuiteGrosOeuvre,
+      annuiteFac: annuiteFacade,
+      annuiteEquip: annuiteEquipement,
+      sommePer3: annuitePeriode3,
       vncPer3: 0,
     });
   }
-  for (var i = 26; i < 50; i++) {
+  for (var i = 20; i < 30; i++) {
     tabAmorImmo.push({
       annee: Number(dateBegin.format("YYYY")) + i,
-      annuiteStruct: annuiteStructure,
-      somme3: annuitePeriode4,
+      annuiteGros: annuiteGrosOeuvre,
+      annuiteFac: annuiteFacade,
+      sommePer4: annuitePeriode4,
       vncPer4: 0,
+    });
+  }
+
+  for (var i = 30; i < 50; i++) {
+    tabAmorImmo.push({
+      annee: Number(dateBegin.format("YYYY")) + i,
+      annuiteGros: annuiteGrosOeuvre,
+      sommePer5: annuitePeriode5,
+      vncPer5: 0,
     });
   }
 
@@ -324,15 +262,33 @@ let calcul = function () {
   });
 
   tabAmorImmo[0].vncPer1 = valeurDuBien - tabAmorImmo[0].sommeAnnProra;
-  console.log(tabAmorImmo[0].vncPer1);
 
-  tabAmorImmo[1].vncPer2 = tabAmorImmo[0].vncPer1 - tabAmorImmo[1].somme1;
+  tabAmorImmo[1].vncPer2 = tabAmorImmo[0].vncPer1 - tabAmorImmo[1].sommePer2;
 
-  console.log(tabAmorImmo[1].somme1);
-  console.log(tabAmorImmo[1].vncPer2);
-  /*for (var i = 1; i < tabAmorImmo.lenght; i++) {
-    tabAmorImmo[i].vncPer2 = tabAmorImmo[i - 1].vncPer1 - tabAmorImmo[i].somme1;
-  }*/
+  for (var i = 2; i < 15; i++) {
+    tabAmorImmo[i].vncPer2 =
+      tabAmorImmo[i - 1].vncPer2 - tabAmorImmo[i].sommePer2;
+  }
+
+  tabAmorImmo[15].vncPer3 = tabAmorImmo[14].vncPer2 - tabAmorImmo[15].sommePer3;
+
+  for (var i = 16; i < 20; i++) {
+    tabAmorImmo[i].vncPer3 =
+      tabAmorImmo[i - 1].vncPer3 - tabAmorImmo[i].sommePer3;
+  }
+
+  tabAmorImmo[20].vncPer4 = tabAmorImmo[19].vncPer3 - tabAmorImmo[20].sommePer4;
+
+  for (var i = 21; i < 30; i++) {
+    tabAmorImmo[i].vncPer4 =
+      tabAmorImmo[i - 1].vncPer4 - tabAmorImmo[i].sommePer4;
+  }
+
+  tabAmorImmo[30].vncPer5 = tabAmorImmo[29].vncPer4 - tabAmorImmo[30].sommePer5;
+  for (var i = 31; i < 50; i++) {
+    tabAmorImmo[i].vncPer5 =
+      tabAmorImmo[i - 1].vncPer5 - tabAmorImmo[i].sommePer5;
+  }
 
   console.table(tabAmorImmo);
   console.log(tabAmorImmo);
