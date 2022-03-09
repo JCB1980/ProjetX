@@ -3,7 +3,7 @@ let calcul = function () {
   let valeurMobilier = Number((document.querySelector("#A6").value = 9000));
   let honorairesAgence = Number((document.querySelector("#A3").value = 5000));
   let fraisNotaire = Number((document.querySelector("#A4").value = 5000));
-  let fraisBancaire = Number((document.querySelector("#A5").value = 500));
+  let fraisBancaire = Number((document.querySelector("#A5").value = 0));
   let montantAnnuelLoyer = Number((document.querySelector("#A2").value = 9000));
   let montantEmprunt = Number((document.querySelector("#A7").value = 1000));
   let fraisAministration = Number((document.querySelector("#A8").value = 500));
@@ -35,25 +35,54 @@ let calcul = function () {
   console.log("Date de fin d'activité", dateEnd.format("DD/MM/YYYY"));
 
   var duration = moment.duration(dateEnd.diff(dateBegin));
-  var days = duration.asDays();
+  var days = Math.round(duration.asDays());
   console.log(Math.round(days));
   var daysYear = 365;
 
   /* prorata dernière année*/
 
-  var dateFin = moment(dateBegin).add(5, "year");
-  console.log(dateFin.get("year"));
+  var dateFinFrais = moment(dateBegin).add(5, "year");
+  console.log(dateFinFrais.get("year"));
 
-  year = new Date(dateFin).getFullYear();
-  startDateOfTheYear = moment([year]);
+  yearFrais = new Date(dateFinFrais).getFullYear();
+  startDateOfTheYearFrais = moment([yearFrais]);
 
-  console.log(startDateOfTheYear.format("DD/MM/YYYY"));
+  console.log(startDateOfTheYearFrais.format("DD/MM/YYYY"));
 
-  var durationEnd = moment.duration(dateFin.diff(startDateOfTheYear));
-  console.log(durationEnd);
-  var days2 = durationEnd.asDays();
-  console.log(Math.round(days2));
-  var daysYear = 365;
+  var durationEndFrais = moment.duration(
+    dateFinFrais.diff(startDateOfTheYearFrais)
+  );
+  var days2Frais = durationEndFrais.asDays();
+  console.log(Math.round(days2Frais));
+
+  var dateFinMob = moment(dateBegin).add(10, "year");
+  console.log(dateFinMob.get("year"));
+
+  yearMob = new Date(dateFinMob).getFullYear();
+  startDateOfTheYearMob = moment([yearMob]);
+
+  console.log(startDateOfTheYearMob.format("DD/MM/YYYY"));
+
+  var durationEndMob = moment.duration(dateFinMob.diff(startDateOfTheYearMob));
+  console.log(durationEndMob);
+  var days2Mob = durationEndMob.asDays();
+  console.log(days2Mob);
+
+  var dateFinImmo = moment(dateBegin).add(50, "year");
+  console.log(dateFinImmo.get("year"));
+
+  yearImmo = new Date(dateFinImmo).getFullYear();
+  startDateOfTheYearImmo = moment([yearImmo]);
+
+  console.log(startDateOfTheYearImmo.format("DD/MM/YYYY"));
+
+  var durationEndImmo = moment.duration(
+    dateFinImmo.diff(startDateOfTheYearImmo)
+  );
+  var days2Immo = durationEndImmo.asDays();
+
+  console.log(durationEndImmo);
+  console.log(days2Immo);
 
   /* charges externes*/
 
@@ -81,7 +110,7 @@ let calcul = function () {
 
   var annuiteMobilier = valeurMobilier * TX_AMORT_MOBILIER;
   var annuiteMobProra = Math.round((annuiteMobilier * days) / daysYear);
-  var annMobProrLastYear = Math.round((annuiteMobilier * days2) / daysYear);
+  var annMobProrLastYear = Math.round((annuiteMobilier * days2Mob) / daysYear);
   var vnc1 = valeurMobilier - annuiteMobProra;
   var vnc = vnc1 - annuiteMobilier;
   var vncLast = valeurMobilier - annMobProrLastYear;
@@ -101,7 +130,7 @@ let calcul = function () {
     });
   }
   tabAmortissementMob.push({
-    annee: Number(dateFin.format("YYYY")) + 5,
+    annee: Number(dateFinMob.format("YYYY")),
     annuiteMobilier: annMobProrLastYear,
     vnc: vncLast,
   });
@@ -124,7 +153,7 @@ let calcul = function () {
     (Number(fraisNotaire) + Number(fraisBancaire) + Number(honorairesAgence)) *
     TX_AMOR_FRAIS;
   var annuiteFraisProra = Math.round((annuiteFrais * days) / daysYear);
-  var annFraisLastYear = Math.round((annuiteFrais * days2) / daysYear);
+  var annFraisLastYear = Math.round((annuiteFrais * days2Frais) / daysYear);
   var vnc1f = fraisEtablissement - annuiteFraisProra;
   var vnc2 = vnc1f - annuiteFrais;
   var vncLast2 = fraisEtablissement - annFraisLastYear;
@@ -145,7 +174,7 @@ let calcul = function () {
     });
   }
   tabAmorFrais.push({
-    annee: Number(dateFin.format("YYYY")),
+    annee: Number(dateFinFrais.format("YYYY")),
     annuiteFrais: annFraisLastYear,
     vnc: vncLast2,
   });
@@ -198,10 +227,15 @@ let calcul = function () {
 
   var sommeAnnuiteProra =
     annGrosProra + annFacadeProra + annEquiProra + annAgenProra;
+  var annGrosLastYear = Math.round((annuitePeriode2 * days2Immo) / daysYear);
+  console.log(annGrosLastYear);
+  var sommeAnnuiteLY = annGrosLastYear;
 
-  var annStrucProrLastYear = Math.round((annuiteGrosOeuvre * days2) / daysYear);
+  console.log(days);
+  console.log("Immo:", days2Immo);
 
-  var sommeAnnProraLastYear = annStrucProrLastYear;
+  console.log("Frais", days2Frais);
+  console.log("Mob", days2Mob);
 
   const tabAmorImmo = [];
   tabAmorImmo.push({
@@ -244,6 +278,8 @@ let calcul = function () {
       vncPer4: 0,
     });
   }
+  console.log(tabAmorImmo.sommePer4);
+  console.log(tabAmorImmo.annuiteGros);
 
   for (var i = 30; i < 50; i++) {
     tabAmorImmo.push({
@@ -253,12 +289,13 @@ let calcul = function () {
       vncPer5: 0,
     });
   }
+  console.log(tabAmorImmo.sommePer5);
 
   tabAmorImmo.push({
-    annee: Number(dateFin.format("YYYY")) + 45,
-    annuiteStrucLY: annStrucProrLastYear,
-    vncLastYear: 0,
-    sommeLast: annStrucProrLastYear,
+    annee: Number(dateFinImmo.format("YYYY")),
+    annuiteGrosLY: annGrosLastYear,
+    sommePer6: sommeAnnuiteLY,
+    vncPer6: 0,
   });
 
   tabAmorImmo[0].vncPer1 = valeurDuBien - tabAmorImmo[0].sommeAnnProra;
@@ -289,6 +326,8 @@ let calcul = function () {
     tabAmorImmo[i].vncPer5 =
       tabAmorImmo[i - 1].vncPer5 - tabAmorImmo[i].sommePer5;
   }
+
+  tabAmorImmo[50].vncPer6 = tabAmorImmo[49].vncPer5 - tabAmorImmo[50].sommePer6;
 
   console.table(tabAmorImmo);
   console.log(tabAmorImmo);
