@@ -1,5 +1,5 @@
 let calcul = function () {
-  let valeurDuBien = Number((document.querySelector("#A1").value = 240000));
+  let valeurDuBien = Number((document.querySelector("#A1").value = 175000));
   let valeurMobilier = Number((document.querySelector("#A6").value = 9000));
   let honorairesAgence = Number((document.querySelector("#A3").value = 5000));
   let fraisNotaire = Number((document.querySelector("#A4").value = 5000));
@@ -29,59 +29,37 @@ let calcul = function () {
 
   var date = document.getElementById("start_date").value;
   var dateBegin = moment(date);
-  console.log("Date de début d'activité", dateBegin.format("DD/MM/YYYY"));
 
   var dateEnd = moment().endOf("year");
-  console.log("Date de fin d'activité", dateEnd.format("DD/MM/YYYY"));
 
   var duration = moment.duration(dateEnd.diff(dateBegin));
   var days = Math.round(duration.asDays());
-  console.log(Math.round(days));
+
   var daysYear = 365;
 
   /* prorata dernière année*/
 
   var dateFinFrais = moment(dateBegin).add(5, "year");
-  console.log(dateFinFrais.get("year"));
 
   yearFrais = new Date(dateFinFrais).getFullYear();
   startDateOfTheYearFrais = moment([yearFrais]);
 
-  console.log(startDateOfTheYearFrais.format("DD/MM/YYYY"));
-
-  var durationEndFrais = moment.duration(
-    dateFinFrais.diff(startDateOfTheYearFrais)
-  );
-  var days2Frais = durationEndFrais.asDays();
-  console.log(Math.round(days2Frais));
+  var days2Frais = 365 - days;
 
   var dateFinMob = moment(dateBegin).add(10, "year");
-  console.log(dateFinMob.get("year"));
 
   yearMob = new Date(dateFinMob).getFullYear();
   startDateOfTheYearMob = moment([yearMob]);
 
-  console.log(startDateOfTheYearMob.format("DD/MM/YYYY"));
-
-  var durationEndMob = moment.duration(dateFinMob.diff(startDateOfTheYearMob));
-  console.log(durationEndMob);
-  var days2Mob = durationEndMob.asDays();
-  console.log(days2Mob);
+  var days2Mob = 365 - days;
 
   var dateFinImmo = moment(dateBegin).add(50, "year");
-  console.log(dateFinImmo.get("year"));
 
   yearImmo = new Date(dateFinImmo).getFullYear();
   startDateOfTheYearImmo = moment([yearImmo]);
+  console.log(startDateOfTheYearImmo);
 
-  console.log(startDateOfTheYearImmo.format("DD/MM/YYYY"));
-
-  var durationEndImmo = moment.duration(
-    dateFinImmo.diff(startDateOfTheYearImmo)
-  );
-  var days2Immo = durationEndImmo.asDays();
-
-  console.log(durationEndImmo);
+  var days2Immo = 365 - days;
   console.log(days2Immo);
 
   /* charges externes*/
@@ -98,14 +76,11 @@ let calcul = function () {
     deduc: deductionsSpecifiques,
     taxes: impots,
   };
-
   var sommeChExternes = 0;
   for (var valeurs in CH_EXT) {
     sommeChExternes = sommeChExternes + CH_EXT[valeurs];
   }
-  console.log(CH_EXT);
   console.log(sommeChExternes);
-
   /*amortissement du mobilier*/
 
   var annuiteMobilier = valeurMobilier * TX_AMORT_MOBILIER;
@@ -192,7 +167,7 @@ let calcul = function () {
   const TX_AMOR_GROS_OEUVRE = 0.02;
   const TX_AMOR_FACADE = 0.0333;
   const TX_AMOR_EQUIPEMENT = 0.05;
-  const TX_AMOR_AGENCEMENT = 0.0667;
+  const TX_AMOR_AGENCEMENT = 0.06673333333;
 
   const TX_REP_GROS_OEUVRE = 0.4;
   const TX_REP_FACADE = 0.2;
@@ -206,10 +181,10 @@ let calcul = function () {
 
   console.log(partA, partB, partC, partD);
 
-  var annuiteGrosOeuvre = Math.round(partA * TX_AMOR_GROS_OEUVRE);
-  var annuiteFacade = Math.round(partB * TX_AMOR_FACADE);
-  var annuiteEquipement = Math.round(partC * TX_AMOR_EQUIPEMENT);
-  var annuiteAgencement = Math.round(partD * TX_AMOR_AGENCEMENT);
+  var annuiteGrosOeuvre = partA * TX_AMOR_GROS_OEUVRE;
+  var annuiteFacade = partB * TX_AMOR_FACADE;
+  var annuiteEquipement = partC * TX_AMOR_EQUIPEMENT;
+  var annuiteAgencement = partD * TX_AMOR_AGENCEMENT;
 
   var annuitePeriode2 =
     annuiteGrosOeuvre + annuiteFacade + annuiteEquipement + annuiteAgencement;
@@ -220,16 +195,22 @@ let calcul = function () {
 
   var annuitePeriode5 = annuiteGrosOeuvre;
 
-  var annGrosProra = Math.round((annuiteGrosOeuvre * days) / daysYear);
-  var annFacadeProra = Math.round((annuiteFacade * days) / daysYear);
-  var annEquiProra = Math.round((annuiteEquipement * days) / daysYear);
-  var annAgenProra = Math.round((annuiteAgencement * days) / daysYear);
+  /*var annGrosProra = Math.trunc((annuiteGrosOeuvre * days) / daysYear);
+  var annFacadeProra = Math.trunc((annuiteFacade * days) / daysYear);
+  var annEquiProra = Math.trunc((annuiteEquipement * days) / daysYear);
+  var annAgenProra = Math.trunc((annuiteAgencement * days) / daysYear);*/
+
+  var annGrosProra = (annuiteGrosOeuvre * days) / daysYear;
+  var annFacadeProra = (annuiteFacade * days) / daysYear;
+  var annEquiProra = (annuiteEquipement * days) / daysYear;
+  var annAgenProra = (annuiteAgencement * days) / daysYear;
 
   var sommeAnnuiteProra =
     annGrosProra + annFacadeProra + annEquiProra + annAgenProra;
-  var annGrosLastYear = Math.round((annuitePeriode2 * days2Immo) / daysYear);
-  console.log(annGrosLastYear);
-  var sommeAnnuiteLY = annGrosLastYear;
+  var annLastYear = (annuitePeriode2 * days2Immo) / daysYear;
+  console.log(annLastYear);
+  console.log(daysYear);
+  var sommeAnnuiteLY = annLastYear;
 
   console.log(days);
   console.log("Immo:", days2Immo);
@@ -238,6 +219,7 @@ let calcul = function () {
   console.log("Mob", days2Mob);
 
   const tabAmorImmo = [];
+
   tabAmorImmo.push({
     annee: Number(dateBegin.format("YYYY")),
     annuiteGrosPro: annGrosProra,
@@ -293,7 +275,7 @@ let calcul = function () {
 
   tabAmorImmo.push({
     annee: Number(dateFinImmo.format("YYYY")),
-    annuiteGrosLY: annGrosLastYear,
+    annuiteLY: annLastYear,
     sommePer6: sommeAnnuiteLY,
     vncPer6: 0,
   });
@@ -322,62 +304,85 @@ let calcul = function () {
   }
 
   tabAmorImmo[30].vncPer5 = tabAmorImmo[29].vncPer4 - tabAmorImmo[30].sommePer5;
-  for (var i = 31; i < 50; i++) {
+  for (var i = 31; i < 49; i++) {
     tabAmorImmo[i].vncPer5 =
       tabAmorImmo[i - 1].vncPer5 - tabAmorImmo[i].sommePer5;
   }
-
-  tabAmorImmo[50].vncPer6 = tabAmorImmo[49].vncPer5 - tabAmorImmo[50].sommePer6;
+  tabAmorImmo[49].vncPer5 = Math.trunc(
+    tabAmorImmo[48].vncPer5 - tabAmorImmo[49].sommePer5
+  );
+  tabAmorImmo[50].vncPer6 = Math.trunc(
+    tabAmorImmo[49].vncPer5 - tabAmorImmo[50].sommePer6
+  );
 
   console.table(tabAmorImmo);
   console.log(tabAmorImmo);
-};
 
-/*Tâches :
+  /*Tâches :
   Coder une Fonction déclaration qui va récupérer les données de la fonction calcul 
   Donner la possibilité à l'utilisateur de sélectionner l'année de déclaration
 */
 
-/*Déclaration 2033A*/
+  /*Déclaration 2033A*/
 
-var immoCorBrut =
-  tabAmorImmo[0].valeurBrute + tabAmortissementMob[0].valeurBrute;
-console.log(immoCorBrut);
-/*var immoCorpoAmor = TAB_AMOR_IMMO[0][9] + TAB_AMORT_MOBILIER[0][1];
-  var immoCorpNetex = immoCorpoBrut - immoCorpoAmor;
-  var immoIncorBrut = TAB_AMOR_FRAIS[0][2];
-  var immoIncorpAmor = TAB_AMOR_FRAIS[0][1];
-  var imIncNetex = immoIncorBrut - immoIncorpAmor;*/
+  Decl2033A = [];
+  Decl2033A.push({
+    Brut: tabAmorImmo[0].valeurBrute,
+    Amor: tabAmorImmo[0].sommeAnnProra,
+    Net: tabAmorImmo[0].vncPer1,
+  });
+  for (var i = 1; i < 15; i++) {
+    Decl2033A.push({
+      Brut: tabAmorImmo[i].vncPer2 + tabAmorImmo[i].sommePer2,
+      Amor: tabAmorImmo[i].sommePer2,
+      Net: tabAmorImmo[i].vncPer2,
+    });
+  }
+  for (var i = 15; i < 20; i++) {
+    Decl2033A.push({
+      Brut: tabAmorImmo[i].vncPer3 + tabAmorImmo[i].sommePer3,
+      Amor: tabAmorImmo[i].sommePer3,
+      Net: tabAmorImmo[i].vncPer3,
+    });
+  }
+  for (var i = 20; i < 30; i++) {
+    Decl2033A.push({
+      Brut: tabAmorImmo[i].vncPer4 + tabAmorImmo[i].sommePer4,
+      Amor: tabAmorImmo[i].sommePer4,
+      Net: tabAmorImmo[i].vncPer4,
+    });
+  }
+  for (var i = 30; i < 50; i++) {
+    Decl2033A.push({
+      Brut: tabAmorImmo[i].vncPer5 + tabAmorImmo[i].sommePer5,
+      Amor: tabAmorImmo[i].sommePer5,
+      Net: tabAmorImmo[i].vncPer5,
+    });
+  }
 
-Decl2033A = [];
-Decl2033A.push({
-  immoCorpoBrut: immoCorBrut,
-  /*immoCorpoAmor: tabAmorimmo[0].sommeAnnProra,
-  immoCorpNetex: tabAmorImmo[0].vncPer1,*/
-});
+  Decl2033A.push({
+    Brut: tabAmorImmo[50].vncPer6 + tabAmorImmo[i].sommePer6,
+    Amor: tabAmorImmo[50].sommePer6,
+    Net: tabAmorImmo[50].vncPer6,
+  });
+  console.log("2033C", Decl2033A);
 
-console.log(Decl2033A);
+  /*Déclaration 2033B*/
 
-/*immoIncorBrut:
-    immoIncorpAmor:
-    imIncNetex:
-    Emprunt: montantEmprunt,
-    montantAnnuelLoyer:
-    )}*/
+  Decl2033B = [];
 
-console.table("2033A:", Tab2033A);
-
-/*Déclaration 2033B
-
-var Serv = montantAnnuelLoyer;
-var CharExt = TabCharExt;
-var ImpTaxes=TabImpo;
-var DotAmor=
-var DefiAntRepo
-
-Tab2033B =[Prod,CharExt,Imp,DotAmor,DefiAntRepo]
-
-/*Déclaration 2033C
+  for (var i = 0; i < 51; i++) {
+    Decl2033B.push({
+      Prestations: montantAnnuelLoyer,
+      ChargesExterne: CH_EXT,
+      TotalChargeExte: sommeChExternes,
+      Impots: impots,
+      DotationAmortissement: 12,
+      DeficitAntReportable: 17,
+    });
+  }
+  console.log("2033B:", Decl2033B);
+  /*Déclaration 2033C
 
   var Autres;
   var DimiImmoCorpo;
@@ -400,3 +405,4 @@ Tab2033B =[Prod,CharExt,Imp,DotAmor,DefiAntRepo]
     ConstrucFinex,
     AutreImmoCorpoFinex,
   ];*/
+};
