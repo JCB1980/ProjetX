@@ -93,7 +93,7 @@ let calcul = function () {
   tabAmortissementMob = [];
   tabAmortissementMob.push({
     annee: Number(dateBegin.format("YYYY")),
-    annuiteMobilier: annuiteMobProra,
+    annuiteMobilierPro: annuiteMobProra,
     vnc: vnc1,
     valeurBrute: valeurMobilier,
   });
@@ -106,7 +106,7 @@ let calcul = function () {
   }
   tabAmortissementMob.push({
     annee: Number(dateFinMob.format("YYYY")),
-    annuiteMobilier: annMobProrLastYear,
+    annuiteMobilierProLY: annMobProrLastYear,
     vnc: vncLast,
   });
 
@@ -327,45 +327,80 @@ let calcul = function () {
 
   Decl2033A = [];
   Decl2033A.push({
-    Brut: tabAmorImmo[0].valeurBrute,
-    Amor: tabAmorImmo[0].sommeAnnProra,
-    Net: tabAmorImmo[0].vncPer1,
+    BrutCorporel:
+      tabAmorImmo[0].valeurBrute + tabAmortissementMob[0].valeurBrute,
+    AmorCorporel: Math.trunc(
+      tabAmorImmo[0].sommeAnnProra + tabAmortissementMob[0].annuiteMobilierPro
+    ),
+    NetCorporel: Math.trunc(
+      tabAmorImmo[0].vncPer1 + tabAmortissementMob[0].vnc
+    ),
+    BrutIncorporel: tabAmorFrais[0].valeurBrute,
+    AmorIncorporel: tabAmorFrais[0].annuiteFrais,
+    NetIncorporel: tabAmorFrais[0].vnc,
+    Emprunt: montantEmprunt,
   });
-  for (var i = 1; i < 15; i++) {
+  for (var i = 1; i < 6; i++) {
     Decl2033A.push({
-      Brut: tabAmorImmo[i].vncPer2 + tabAmorImmo[i].sommePer2,
-      Amor: tabAmorImmo[i].sommePer2,
-      Net: tabAmorImmo[i].vncPer2,
+      BrutCorporel: Math.trunc(
+        tabAmorImmo[i].vncPer2 +
+          tabAmorImmo[i].sommePer2 +
+          (tabAmortissementMob[i].vnc + tabAmortissementMob[i].annuiteMobilier)
+      ),
+      AmorCorporel: Math.trunc(
+        tabAmorImmo[i].sommePer2 + tabAmortissementMob[i].annuiteMobilier
+      ),
+      NetCorporel: Math.trunc(
+        tabAmorImmo[i].vncPer2 + tabAmortissementMob[i].vnc
+      ),
+      BrutIncorporel: tabAmorFrais[i].vnc + tabAmorFrais[i].annuiteFrais,
+      AmorIncorporel: tabAmorFrais[i].annuiteFrais,
+      NetIncorporel: tabAmorFrais[i].vnc,
+      Emprunt: montantEmprunt,
+    });
+  }
+  for (var i = 6; i < 15; i++) {
+    Decl2033A.push({
+      BrutCorporel: Math.trunc(
+        tabAmorImmo[i].vncPer2 + tabAmorImmo[i].sommePer2
+      ),
+      AmorCorporel: Math.trunc(tabAmorImmo[i].sommePer2),
+      NetCorporel: Math.trunc(tabAmorImmo[i].vncPer2),
+      Emprunt: montantEmprunt,
     });
   }
   for (var i = 15; i < 20; i++) {
     Decl2033A.push({
-      Brut: tabAmorImmo[i].vncPer3 + tabAmorImmo[i].sommePer3,
-      Amor: tabAmorImmo[i].sommePer3,
-      Net: tabAmorImmo[i].vncPer3,
+      Brut: Math.trunc(tabAmorImmo[i].vncPer3 + tabAmorImmo[i].sommePer3),
+      Amor: Math.trunc(tabAmorImmo[i].sommePer3),
+      Net: Math.trunc(tabAmorImmo[i].vncPer3),
+      Emprunt: montantEmprunt,
     });
   }
   for (var i = 20; i < 30; i++) {
     Decl2033A.push({
-      Brut: tabAmorImmo[i].vncPer4 + tabAmorImmo[i].sommePer4,
-      Amor: tabAmorImmo[i].sommePer4,
-      Net: tabAmorImmo[i].vncPer4,
+      Brut: Math.trunc(tabAmorImmo[i].vncPer4 + tabAmorImmo[i].sommePer4),
+      Amor: Math.trunc(tabAmorImmo[i].sommePer4),
+      Net: Math.trunc(tabAmorImmo[i].vncPer4),
+      Emprunt: montantEmprunt,
     });
   }
   for (var i = 30; i < 50; i++) {
     Decl2033A.push({
-      Brut: tabAmorImmo[i].vncPer5 + tabAmorImmo[i].sommePer5,
-      Amor: tabAmorImmo[i].sommePer5,
-      Net: tabAmorImmo[i].vncPer5,
+      Brut: Math.trunc(tabAmorImmo[i].vncPer5 + tabAmorImmo[i].sommePer5),
+      Amor: Math.trunc(tabAmorImmo[i].sommePer5),
+      Net: Math.trunc(tabAmorImmo[i].vncPer5),
+      Emprunt: montantEmprunt,
     });
   }
 
   Decl2033A.push({
-    Brut: tabAmorImmo[50].vncPer6 + tabAmorImmo[i].sommePer6,
-    Amor: tabAmorImmo[50].sommePer6,
-    Net: tabAmorImmo[50].vncPer6,
+    Brut: Math.trunc(tabAmorImmo[50].vncPer6 + tabAmorImmo[i].sommePer6),
+    Amor: Math.trunc(tabAmorImmo[50].sommePer6),
+    Net: Math.trunc(tabAmorImmo[50].vncPer6),
+    Emprunt: montantEmprunt,
   });
-  console.log("2033C", Decl2033A);
+  console.log("2033A", Decl2033A);
 
   /*Déclaration 2033B*/
 
@@ -373,7 +408,7 @@ let calcul = function () {
 
   for (var i = 0; i < 51; i++) {
     Decl2033B.push({
-      Prestations: montantAnnuelLoyer,
+      Loyers: montantAnnuelLoyer,
       ChargesExterne: CH_EXT,
       TotalChargeExte: sommeChExternes,
       Impots: impots,
