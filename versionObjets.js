@@ -495,7 +495,6 @@ let calcul = function () {
         Decl2033B[i].ResultatExploitation - Decl2033B[i].ResultatExploitation,
     });
   }
-  console.log(Decl2033B.ResultFiscApresDeficitN1);
 
   for (var i = 5; i < 10; i++) {
     Decl2033B.push({
