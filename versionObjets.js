@@ -1,26 +1,26 @@
 let calcul = function () {
-  let valeurDuBien = Number((document.querySelector("#A1").value = 175000));
-  let valeurMobilier = Number((document.querySelector("#A6").value = 9000));
-  let honorairesAgence = Number((document.querySelector("#A3").value = 5000));
-  let fraisNotaire = Number((document.querySelector("#A4").value = 5000));
+  let valeurDuBien = Number((document.querySelector("#A1").value = 100000));
+  let valeurMobilier = Number((document.querySelector("#A6").value = 5000));
+  let honorairesAgence = Number((document.querySelector("#A3").value = 0));
+  let fraisNotaire = Number((document.querySelector("#A4").value = 7000));
   let fraisBancaire = Number((document.querySelector("#A5").value = 0));
   let montantAnnuelLoyer = Number((document.querySelector("#A2").value = 9000));
-  let montantEmprunt = Number((document.querySelector("#A7").value = 1000));
-  let fraisAministration = Number((document.querySelector("#A8").value = 500));
-  let fraisLocal = 20;
-  let indemnitesEviction = Number((document.querySelector("#A10").value = 600));
-  let depensesTravaux = Number((document.querySelector("#A11").value = 900));
-  let chargesLocatives = Number((document.querySelector("#A12").value = 900));
-  let impots = Number((document.querySelector("#A13").value = 750));
-  let primesAssurances = Number((document.querySelector("#A14").value = 987));
+  let montantEmprunt = Number((document.querySelector("#A7").value = 200000));
+  let fraisAministration = Number((document.querySelector("#A8").value = 1000));
+  let fraisLocal = 0;
+  let indemnitesEviction = Number((document.querySelector("#A10").value = 0));
+  let depensesTravaux = Number((document.querySelector("#A11").value = 0));
+  let chargesLocatives = Number((document.querySelector("#A12").value = 0));
+  let impots = Number((document.querySelector("#A13").value = 3000));
+  let primesAssurances = Number((document.querySelector("#A14").value = 0));
   let provisionsChargesCopropriete = Number(
-    (document.querySelector("#A15").value = 566)
+    (document.querySelector("#A15").value = 0)
   );
   let interetsEtFraisEmprunt = Number(
-    (document.querySelector("#A16").value = 2000)
+    (document.querySelector("#A16").value = 0)
   );
   let deductionsSpecifiques = Number(
-    (document.querySelector("#A17").value = 700)
+    (document.querySelector("#A17").value = 0)
   );
   const TX_AMORT_MOBILIER = 0.1;
   const TX_AMOR_FRAIS = 0.2;
@@ -93,7 +93,7 @@ let calcul = function () {
   tabAmortissementMob = [];
   tabAmortissementMob.push({
     annee: Number(dateBegin.format("YYYY")),
-    annuiteMobilier: annuiteMobProra,
+    annuiteMobilierPro: annuiteMobProra,
     vnc: vnc1,
     valeurBrute: valeurMobilier,
   });
@@ -106,7 +106,7 @@ let calcul = function () {
   }
   tabAmortissementMob.push({
     annee: Number(dateFinMob.format("YYYY")),
-    annuiteMobilier: annMobProrLastYear,
+    annuiteMobilierProLY: annMobProrLastYear,
     vnc: vncLast,
   });
 
@@ -327,61 +327,283 @@ let calcul = function () {
 
   Decl2033A = [];
   Decl2033A.push({
-    Brut: tabAmorImmo[0].valeurBrute,
-    Amor: tabAmorImmo[0].sommeAnnProra,
-    Net: tabAmorImmo[0].vncPer1,
+    annee: Number(dateBegin.format("YYYY")),
+    BrutCorporel:
+      tabAmorImmo[0].valeurBrute + tabAmortissementMob[0].valeurBrute,
+    AmorCorporel: Math.trunc(
+      tabAmorImmo[0].sommeAnnProra + tabAmortissementMob[0].annuiteMobilierPro
+    ),
+    NetCorporel: Math.trunc(
+      tabAmorImmo[0].vncPer1 + tabAmortissementMob[0].vnc
+    ),
+    BrutIncorporel: tabAmorFrais[0].valeurBrute,
+    AmorIncorporel: tabAmorFrais[0].annuiteFrais,
+    NetIncorporel: tabAmorFrais[0].vnc,
+    Emprunt: montantEmprunt,
   });
-  for (var i = 1; i < 15; i++) {
+  for (var i = 1; i < 6; i++) {
     Decl2033A.push({
-      Brut: tabAmorImmo[i].vncPer2 + tabAmorImmo[i].sommePer2,
-      Amor: tabAmorImmo[i].sommePer2,
-      Net: tabAmorImmo[i].vncPer2,
+      annee: Number(dateBegin.format("YYYY")) + i,
+      BrutCorporel: Math.trunc(
+        tabAmorImmo[i].vncPer2 +
+          tabAmorImmo[i].sommePer2 +
+          (tabAmortissementMob[i].vnc + tabAmortissementMob[i].annuiteMobilier)
+      ),
+      AmorCorporel: Math.trunc(
+        tabAmorImmo[i].sommePer2 + tabAmortissementMob[i].annuiteMobilier
+      ),
+      NetCorporel: Math.trunc(
+        tabAmorImmo[i].vncPer2 + tabAmortissementMob[i].vnc
+      ),
+      BrutIncorporel: tabAmorFrais[i].vnc + tabAmorFrais[i].annuiteFrais,
+      AmorIncorporel: tabAmorFrais[i].annuiteFrais,
+      NetIncorporel: tabAmorFrais[i].vnc,
+      Emprunt: montantEmprunt,
+    });
+  }
+  for (var i = 6; i < 10; i++) {
+    Decl2033A.push({
+      annee: Number(dateBegin.format("YYYY")) + i,
+      BrutCorporel: Math.trunc(
+        tabAmorImmo[i].vncPer2 +
+          tabAmorImmo[i].sommePer2 +
+          (tabAmortissementMob[i].vnc + tabAmortissementMob[i].annuiteMobilier)
+      ),
+      AmorCorporel: Math.trunc(
+        tabAmorImmo[i].sommePer2 + tabAmortissementMob[i].annuiteMobilier
+      ),
+      NetCorporel: Math.trunc(
+        tabAmorImmo[i].vncPer2 + tabAmortissementMob[i].vnc
+      ),
+      Emprunt: montantEmprunt,
+    });
+  }
+  for (var i = 10; i < 15; i++) {
+    Decl2033A.push({
+      annee: Number(dateBegin.format("YYYY")) + i,
+      Brut: Math.trunc(tabAmorImmo[i].vncPer2 + tabAmorImmo[i].sommePer2),
+      Amor: Math.trunc(tabAmorImmo[i].sommePer2),
+      Net: Math.trunc(tabAmorImmo[i].vncPer2),
+      Emprunt: montantEmprunt,
     });
   }
   for (var i = 15; i < 20; i++) {
     Decl2033A.push({
-      Brut: tabAmorImmo[i].vncPer3 + tabAmorImmo[i].sommePer3,
-      Amor: tabAmorImmo[i].sommePer3,
-      Net: tabAmorImmo[i].vncPer3,
+      annee: Number(dateBegin.format("YYYY")) + i,
+      Brut: Math.trunc(tabAmorImmo[i].vncPer3 + tabAmorImmo[i].sommePer3),
+      Amor: Math.trunc(tabAmorImmo[i].sommePer3),
+      Net: Math.trunc(tabAmorImmo[i].vncPer3),
+      Emprunt: montantEmprunt,
     });
   }
   for (var i = 20; i < 30; i++) {
     Decl2033A.push({
-      Brut: tabAmorImmo[i].vncPer4 + tabAmorImmo[i].sommePer4,
-      Amor: tabAmorImmo[i].sommePer4,
-      Net: tabAmorImmo[i].vncPer4,
+      annee: Number(dateBegin.format("YYYY")) + i,
+      Brut: Math.trunc(tabAmorImmo[i].vncPer4 + tabAmorImmo[i].sommePer4),
+      Amor: Math.trunc(tabAmorImmo[i].sommePer4),
+      Net: Math.trunc(tabAmorImmo[i].vncPer4),
+      Emprunt: montantEmprunt,
     });
   }
   for (var i = 30; i < 50; i++) {
     Decl2033A.push({
-      Brut: tabAmorImmo[i].vncPer5 + tabAmorImmo[i].sommePer5,
-      Amor: tabAmorImmo[i].sommePer5,
-      Net: tabAmorImmo[i].vncPer5,
+      annee: Number(dateBegin.format("YYYY")) + i,
+      Brut: Math.trunc(tabAmorImmo[i].vncPer5 + tabAmorImmo[i].sommePer5),
+      Amor: Math.trunc(tabAmorImmo[i].sommePer5),
+      Net: Math.trunc(tabAmorImmo[i].vncPer5),
+      Emprunt: montantEmprunt,
     });
   }
-
   Decl2033A.push({
-    Brut: tabAmorImmo[50].vncPer6 + tabAmorImmo[i].sommePer6,
-    Amor: tabAmorImmo[50].sommePer6,
-    Net: tabAmorImmo[50].vncPer6,
+    annee: Number(dateFinImmo.format("YYYY")),
+    Brut: Math.trunc(tabAmorImmo[50].vncPer6 + tabAmorImmo[i].sommePer6),
+    Amor: Math.trunc(tabAmorImmo[50].sommePer6),
+    Net: Math.trunc(tabAmorImmo[50].vncPer6),
+    Emprunt: montantEmprunt,
   });
-  console.log("2033C", Decl2033A);
+  console.log("2033A", Decl2033A);
 
   /*Déclaration 2033B*/
 
   Decl2033B = [];
-
-  for (var i = 0; i < 51; i++) {
+  Decl2033B.push({
+    annee: Number(dateBegin.format("YYYY")),
+    Loyers: montantAnnuelLoyer,
+    TotalChargeExte: sommeChExternes,
+    Impots: impots,
+    DotationAmortissement: Math.trunc(
+      tabAmorFrais[0].annuiteFrais +
+        tabAmorImmo[0].sommeAnnProra +
+        tabAmortissementMob[0].annuiteMobilierPro
+    ),
+    TotalProduitExplo: montantAnnuelLoyer,
+    TotalCharExploitations:
+      sommeChExternes +
+      impots +
+      Math.trunc(
+        tabAmorFrais[0].annuiteFrais +
+          tabAmorImmo[0].sommeAnnProra +
+          tabAmortissementMob[0].annuiteMobilierPro
+      ),
+    ResultatExploitation:
+      montantAnnuelLoyer -
+      (sommeChExternes +
+        impots +
+        Math.trunc(
+          tabAmorFrais[0].annuiteFrais +
+            tabAmorImmo[0].sommeAnnProra +
+            tabAmortissementMob[0].annuiteMobilierPro
+        )),
+    /*BenefOuPerte: Report de la valeur de la prop ResultatExploitation. Insérer une condition If pour report en bénéfice ou perte*/
+    /*ResultFiscAvantDeficit: Report de la valeur de la prop ResultatExploitation*/
+    /*Deficit: Report de la valeur de la prop ResultatExploitation*/
+    /* Pour la première année report de la valeur ResultatExploitationResultFiscApresDeficit: */
+  });
+  for (var i = 1; i < 5; i++) {
     Decl2033B.push({
-      Prestations: montantAnnuelLoyer,
-      ChargesExterne: CH_EXT,
+      annee: Number(dateBegin.format("YYYY")) + i,
+      Loyers: montantAnnuelLoyer,
       TotalChargeExte: sommeChExternes,
       Impots: impots,
-      DotationAmortissement: 12,
-      DeficitAntReportable: 17,
+      DotationAmortissement: Math.trunc(
+        tabAmorFrais[i].annuiteFrais +
+          tabAmorImmo[i].sommePer2 +
+          tabAmortissementMob[i].annuiteMobilier
+      ),
+      TotalProduitExplo: montantAnnuelLoyer,
+      TotalCharExploitations:
+        sommeChExternes +
+        impots +
+        Math.trunc(
+          tabAmorFrais[i].annuiteFrais +
+            tabAmorImmo[i].sommePer2 +
+            tabAmortissementMob[i].annuiteMobilier
+        ),
+      ResultatExploitation:
+        montantAnnuelLoyer -
+        (sommeChExternes +
+          impots +
+          Math.trunc(
+            tabAmorFrais[i].annuiteFrais +
+              tabAmorImmo[i].sommePer2 +
+              tabAmortissementMob[i].annuiteMobilier
+          )),
+
+      ResultFiscApresDeficitN1:
+        Decl2033B[0].ResultatExploitation - Decl2033B[1].ResultatExploitation,
+      ResultFiscApresDeficit:
+        Decl2033B[i].ResultatExploitation - Decl2033B[i].ResultatExploitation,
     });
   }
+
+  for (var i = 5; i < 10; i++) {
+    Decl2033B.push({
+      annee: Number(dateBegin.format("YYYY")) + i,
+      Loyers: montantAnnuelLoyer,
+
+      TotalChargeExte: sommeChExternes,
+      Impots: impots,
+      DotationAmortissement: Math.trunc(
+        tabAmorImmo[i].sommePer2 + tabAmortissementMob[i].annuiteMobilier
+      ),
+      TotalProduitExplo: montantAnnuelLoyer,
+      TotalCharExploitations:
+        sommeChExternes +
+        impots +
+        Math.trunc(
+          tabAmorImmo[i].sommePer2 + tabAmortissementMob[i].annuiteMobilier
+        ),
+      ResultatExploitation:
+        montantAnnuelLoyer -
+        (sommeChExternes +
+          impots +
+          Math.trunc(
+            tabAmorImmo[i].sommePer2 + tabAmortissementMob[i].annuiteMobilier
+          )),
+      DeficitAntReportable: 0,
+    });
+  }
+  for (var i = 10; i < 15; i++) {
+    Decl2033B.push({
+      annee: Number(dateBegin.format("YYYY")) + i,
+      Loyers: montantAnnuelLoyer,
+
+      TotalChargeExte: sommeChExternes,
+      Impots: impots,
+      DotationAmortissement: Math.trunc(tabAmorImmo[i].sommePer2),
+      TotalProduitExplo: montantAnnuelLoyer,
+      TotalCharExploitations:
+        sommeChExternes + impots + Math.trunc(tabAmorImmo[i].sommePer2),
+      ResultatExploitation:
+        montantAnnuelLoyer -
+        (sommeChExternes + impots + Math.trunc(tabAmorImmo[i].sommePer2)),
+      DeficitAntReportable: 0,
+    });
+  }
+  for (var i = 15; i < 20; i++) {
+    Decl2033B.push({
+      annee: Number(dateBegin.format("YYYY")) + i,
+      Loyers: montantAnnuelLoyer,
+
+      TotalChargeExte: sommeChExternes,
+      Impots: impots,
+      DotationAmortissement: Math.trunc(tabAmorImmo[i].sommePer3),
+      TotalCharExploitations:
+        sommeChExternes + impots + Math.trunc(tabAmorImmo[i].sommePer3),
+      ResultatExploitation:
+        montantAnnuelLoyer -
+        (sommeChExternes + impots + Math.trunc(tabAmorImmo[i].sommePer3)),
+      DeficitAntReportable: 0,
+    });
+  }
+  for (var i = 20; i < 30; i++) {
+    Decl2033B.push({
+      annee: Number(dateBegin.format("YYYY")) + i,
+      Loyers: montantAnnuelLoyer,
+
+      TotalChargeExte: sommeChExternes,
+      Impots: impots,
+      DotationAmortissement: Math.trunc(tabAmorImmo[i].sommePer4),
+      TotalCharExploitations:
+        sommeChExternes + impots + Math.trunc(tabAmorImmo[i].sommePer4),
+      ResultatExploitation:
+        montantAnnuelLoyer -
+        (sommeChExternes + impots + Math.trunc(tabAmorImmo[i].sommePer4)),
+      DeficitAntReportable: 0,
+    });
+  }
+  for (var i = 30; i < 50; i++) {
+    Decl2033B.push({
+      annee: Number(dateBegin.format("YYYY")) + i,
+      Loyers: montantAnnuelLoyer,
+
+      TotalChargeExte: sommeChExternes,
+      Impots: impots,
+      DotationAmortissement: Math.trunc(tabAmorImmo[i].sommePer5),
+      TotalCharExploitations:
+        sommeChExternes + impots + Math.trunc(tabAmorImmo[i].sommePer5),
+      ResultatExploitation:
+        montantAnnuelLoyer -
+        (sommeChExternes + impots + Math.trunc(tabAmorImmo[i].sommePer5)),
+      DeficitAntReportable: 0,
+    });
+  }
+  Decl2033B.push({
+    annee: Number(dateFinImmo.format("YYYY")),
+    Loyers: montantAnnuelLoyer,
+
+    TotalChargeExte: sommeChExternes,
+    Impots: impots,
+    DotationAmortissement: Math.trunc(tabAmorImmo[50].sommePer6),
+    TotalCharExploitations:
+      sommeChExternes + impots + Math.trunc(tabAmorImmo[i].sommePer6),
+    ResultatExploitation:
+      montantAnnuelLoyer -
+      (sommeChExternes + impots + Math.trunc(tabAmorImmo[i].sommePer6)),
+    DeficitAntReportable: 0,
+  });
   console.log("2033B:", Decl2033B);
+
   /*Déclaration 2033C
 
   var Autres;
