@@ -488,6 +488,11 @@ let calcul = function () {
               tabAmorImmo[i].sommePer2 +
               tabAmortissementMob[i].annuiteMobilier
           )),
+
+      ResultFiscApresDeficitN1:
+        Decl2033B[0].ResultatExploitation - Decl2033B[1].ResultatExploitation,
+      ResultFiscApresDeficit:
+        Decl2033B[i].ResultatExploitation - Decl2033B[i].ResultatExploitation,
     });
   }
 
@@ -600,7 +605,6 @@ let calcul = function () {
   console.log("2033B:", Decl2033B);
 
   /*Déclaration 2033C
-
   var Autres;
   var DimiImmoCorpo;
   var Construction;
@@ -610,7 +614,6 @@ let calcul = function () {
   var AutresFinex;
   var ConstrucFinex;
   var AutreImmoCorpoFinex;
-
   Tab2033C = [
     Autres,
     DimiImmoCorpo,
