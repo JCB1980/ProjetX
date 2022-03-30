@@ -599,10 +599,10 @@ let calcul = function () {
   });
   console.log("2033B:", Decl2033B);
 
-  /*Gérer les résultats*/
-  /*Le deficit de l'année N doit être reporté en N+1;
-  Pas de deficit pour la première année*/
-  /*
+  /*Gérer les résultats
+  Le deficit de l'année N doit être reporté en N+1;
+  Pas de deficit pour la première année
+  
   var Deficit = 0;
   var Benefice =0;
   Resultat = [];
@@ -622,25 +622,97 @@ let calcul = function () {
   }
   console.log(Deficit);*/
 
-  /*Déclaration 2033C
-  var Autres;
-  var DimiImmoCorpo;
-  var Construction;
-  var AutreImmoCorp;
-  var DimiConst;
-  var DimiAutrImmo;
-  var AutresFinex;
-  var ConstrucFinex;
-  var AutreImmoCorpoFinex;
-  Tab2033C = [
-    Autres,
-    DimiImmoCorpo,
-    Construction,
-    AutreImmoCorp,
-    DimiConst,
-    DimiAutrImmo,
-    AutresFinex,
-    ConstrucFinex,
-    AutreImmoCorpoFinex,
-  ];*/
+  /*Déclaration 2033C*/
+
+  Decl2033C = [];
+  Decl2033C.push({
+    annee: Number(dateBegin.format("YYYY")),
+    ValeurBruteFrais: tabAmorFrais[0].valeurBrute,
+    /*AugmentationsFrais:*/
+    DiminutionsFrais: tabAmorFrais[0].annuiteFrais,
+    ValeurBruteFinExFrais: tabAmorFrais[0].vnc,
+    ValeurBruteImmo: tabAmorImmO[0].valeurBrute,
+    AugmentationsImmo: tabAmorImmo[0].valeurBrute,
+    DiminutionsImmo: tabAmorImmo[0].sommeAnnProra,
+    ValeurBruteFinExMob: tabAmorImmo[0].vncPer1,
+    ValeurBruteMob: tabAmortissementMob[0].valeurBrute,
+    DiminutionsMob: tabAmortissementMob[0].annuiteMobilierPro,
+    ValeurBruteFinExMob: tabAmortissementMob[0].vnc,
+  });
+  for (var i = 1; i < 5; i++) {
+    Decl2033C.push({
+      annee: Number(dateBegin.format("YYYY")) + i,
+      ValeurBruteFrais: tabAmorFrais[i].ValeurBruteFinExFrais,
+      DiminutionsFrais: tabAmorFrais[i].annuiteFrais,
+      ValeurBruteFinExFrais: tabAmorFrais[i].vnc,
+      ValeurBruteImmo: tabAmorImmo[i].valeurBrute,
+      AugmentationsImmo: tabAmorImmo[i].valeurBrute,
+      DiminutionsImmo: tabAmorImmo[i].sommeAnnProra,
+      ValeurBruteFinExMob: tabAmorImmo[i].vncPer1,
+      ValeurBruteMob: tabAmortissementMob[i].valeurBrute,
+      DiminutionsMob: tabAmortissementMob[i].annuiteMobilierPro,
+      ValeurBruteFinExMob: tabAmortissementMob[i].vnc,
+    });
+  }
+  for (var i = 5; i < 10; i++) {
+    Decl2033C.push({
+      annee: Number(dateBegin.format("YYYY")) + i,
+
+      ValeurBruteImmo: tabAmorImmo[i].valeurBrute,
+      AugmentationsImmo: tabAmorImmo[i].valeurBrute,
+      DiminutionsImmo: tabAmorImmo[i].sommeAnnProra,
+      ValeurBruteFinExMob: tabAmorImmo[i].vncPer2,
+      ValeurBruteMob: tabAmortissementMob[i].valeurBrute,
+      DiminutionsMob: tabAmortissementMob[i].annuiteMobilierPro,
+      ValeurBruteFinExMob: tabAmortissementMob[i].vnc,
+    });
+  }
+  for (var i = 10; i < 15; i++) {
+    Decl2033C.push({
+      annee: Number(dateBegin.format("YYYY")) + i,
+
+      ValeurBruteImmo: tabAmorImmo[i].valeurBrute,
+      AugmentationsImmo: tabAmorImmo[i].valeurBrute,
+      DiminutionsImmo: tabAmorImmo[i].sommeAnnProra,
+      ValeurBruteFinExMob: tabAmorImmo[i].vncPer2,
+      ValeurBruteMob: tabAmortissementMob[i].valeurBrute,
+      DiminutionsMob: tabAmortissementMob[i].annuiteMobilierPro,
+      ValeurBruteFinExMob: tabAmortissementMob[i].vnc,
+    });
+  }
+  for (var i = 15; i < 20; i++) {
+    Decl2033C.push({
+      annee: Number(dateBegin.format("YYYY")) + i,
+
+      ValeurBruteImmo: tabAmorImmo[i].valeurBrute,
+      AugmentationsImmo: tabAmorImmo[i].valeurBrute,
+      DiminutionsImmo: tabAmorImmo[i].sommeAnnProra,
+    });
+  }
+  for (var i = 20; i < 30; i++) {
+    Decl2033C.push({
+      annee: Number(dateBegin.format("YYYY")) + i,
+
+      ValeurBruteImmo: tabAmorImmo[i].valeurBrute,
+      AugmentationsImmo: tabAmorImmo[i].valeurBrute,
+      DiminutionsImmo: tabAmorImmo[i].sommeAnnProra,
+    });
+  }
+  for (var i = 30; i < 50; i++) {
+    Decl2033B.push({
+      annee: Number(dateBegin.format("YYYY")) + i,
+
+      ValeurBruteImmo: tabAmorImmo[i].valeurBrute,
+      AugmentationsImmo: tabAmorImmo[i].valeurBrute,
+      DiminutionsImmo: tabAmorImmo[i].sommeAnnProra,
+    });
+  }
+  Decl2033B.push({
+    annee: Number(dateFinImmo.format("YYYY")),
+
+    ValeurBruteImmo: tabAmorImmo[i].valeurBrute,
+    AugmentationsImmo: tabAmorImmo[i].valeurBrute,
+    DiminutionsImmo: tabAmorImmo[i].sommeAnnProra,
+  });
+  console.log("2033C:", Decl2033C);
 };
