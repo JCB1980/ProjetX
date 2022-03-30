@@ -424,8 +424,11 @@ let calcul = function () {
   console.log("2033A", Decl2033A);
 
   /*Déclaration 2033B*/
+  var Benefice = 0;
+  var Deficit = 0;
 
   Decl2033B = [];
+
   Decl2033B.push({
     annee: Number(dateBegin.format("YYYY")),
     Loyers: montantAnnuelLoyer,
@@ -454,11 +457,14 @@ let calcul = function () {
             tabAmorImmo[0].sommeAnnProra +
             tabAmortissementMob[0].annuiteMobilierPro
         )),
+    Perte: Deficit,
+    Gain: Benefice,
     /*BenefOuPerte: Report de la valeur de la prop ResultatExploitation. Insérer une condition If pour report en bénéfice ou perte*/
     /*ResultFiscAvantDeficit: Report de la valeur de la prop ResultatExploitation*/
     /*Deficit: Report de la valeur de la prop ResultatExploitation*/
     /* Pour la première année report de la valeur ResultatExploitationResultFiscApresDeficit: */
   });
+
   for (var i = 1; i < 5; i++) {
     Decl2033B.push({
       annee: Number(dateBegin.format("YYYY")) + i,
@@ -488,11 +494,6 @@ let calcul = function () {
               tabAmorImmo[i].sommePer2 +
               tabAmortissementMob[i].annuiteMobilier
           )),
-
-      ResultFiscApresDeficitN1:
-        Decl2033B[0].ResultatExploitation - Decl2033B[1].ResultatExploitation,
-      ResultFiscApresDeficit:
-        Decl2033B[i].ResultatExploitation - Decl2033B[i].ResultatExploitation,
     });
   }
 
@@ -520,7 +521,6 @@ let calcul = function () {
           Math.trunc(
             tabAmorImmo[i].sommePer2 + tabAmortissementMob[i].annuiteMobilier
           )),
-      DeficitAntReportable: 0,
     });
   }
   for (var i = 10; i < 15; i++) {
@@ -537,7 +537,6 @@ let calcul = function () {
       ResultatExploitation:
         montantAnnuelLoyer -
         (sommeChExternes + impots + Math.trunc(tabAmorImmo[i].sommePer2)),
-      DeficitAntReportable: 0,
     });
   }
   for (var i = 15; i < 20; i++) {
@@ -553,7 +552,6 @@ let calcul = function () {
       ResultatExploitation:
         montantAnnuelLoyer -
         (sommeChExternes + impots + Math.trunc(tabAmorImmo[i].sommePer3)),
-      DeficitAntReportable: 0,
     });
   }
   for (var i = 20; i < 30; i++) {
@@ -569,7 +567,6 @@ let calcul = function () {
       ResultatExploitation:
         montantAnnuelLoyer -
         (sommeChExternes + impots + Math.trunc(tabAmorImmo[i].sommePer4)),
-      DeficitAntReportable: 0,
     });
   }
   for (var i = 30; i < 50; i++) {
@@ -585,7 +582,6 @@ let calcul = function () {
       ResultatExploitation:
         montantAnnuelLoyer -
         (sommeChExternes + impots + Math.trunc(tabAmorImmo[i].sommePer5)),
-      DeficitAntReportable: 0,
     });
   }
   Decl2033B.push({
@@ -600,9 +596,31 @@ let calcul = function () {
     ResultatExploitation:
       montantAnnuelLoyer -
       (sommeChExternes + impots + Math.trunc(tabAmorImmo[i].sommePer6)),
-    DeficitAntReportable: 0,
   });
   console.log("2033B:", Decl2033B);
+
+  /*Gérer les résultats*/
+  /*Le deficit de l'année N doit être reporté en N+1;
+  Pas de deficit pour la première année*/
+  /*
+  var Deficit = 0;
+  var Benefice =0;
+  Resultat = [];
+
+  Resultat.push({
+    annee: Number(dateBegin.format("YYYY")),
+    Perte: Deficite,
+    Gain : Benefice,
+  });
+  for (var i = 1; i < 50; i++) {
+    Resultat.push({
+      annee: Number(dateBegin.format("YYYY")) + i,
+      Perte:
+        Decl2033B.ResultatExploitation[0] - Decl2033B.ResultatExploitation[1],
+      Gain: Benefice,
+    });
+  }
+  console.log(Deficit);*/
 
   /*Déclaration 2033C
   var Autres;
