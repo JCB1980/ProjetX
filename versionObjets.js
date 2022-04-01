@@ -424,8 +424,6 @@ let calcul = function () {
   console.log("2033A", Decl2033A);
 
   /*Déclaration 2033B*/
-  var Benefice = 0;
-  var Deficit = 0;
 
   Decl2033B = [];
 
@@ -448,7 +446,7 @@ let calcul = function () {
           tabAmorImmo[0].sommeAnnProra +
           tabAmortissementMob[0].annuiteMobilierPro
       ),
-    ResultatExploitation:
+    Resultat:
       montantAnnuelLoyer -
       (sommeChExternes +
         impots +
@@ -457,15 +455,20 @@ let calcul = function () {
             tabAmorImmo[0].sommeAnnProra +
             tabAmortissementMob[0].annuiteMobilierPro
         )),
-    Perte: Deficit,
-    Gain: Benefice,
-    /*BenefOuPerte: Report de la valeur de la prop ResultatExploitation. Insérer une condition If pour report en bénéfice ou perte*/
-    /*ResultFiscAvantDeficit: Report de la valeur de la prop ResultatExploitation*/
-    /*Deficit: Report de la valeur de la prop ResultatExploitation*/
-    /* Pour la première année report de la valeur ResultatExploitationResultFiscApresDeficit: */
+    ResultatCumule:
+      montantAnnuelLoyer -
+      (sommeChExternes +
+        impots +
+        Math.trunc(
+          tabAmorFrais[0].annuiteFrais +
+            tabAmorImmo[0].sommeAnnProra +
+            tabAmortissementMob[0].annuiteMobilierPro
+        )),
   });
 
   for (var i = 1; i < 5; i++) {
+    var reportDeficit = Decl2033B[i - 1].Resultat;
+
     Decl2033B.push({
       annee: Number(dateBegin.format("YYYY")) + i,
       Loyers: montantAnnuelLoyer,
@@ -485,10 +488,20 @@ let calcul = function () {
             tabAmorImmo[i].sommePer2 +
             tabAmortissementMob[i].annuiteMobilier
         ),
-      ResultatExploitation:
+      Resultat:
         montantAnnuelLoyer -
         (sommeChExternes +
           impots +
+          Math.trunc(
+            tabAmorFrais[i].annuiteFrais +
+              tabAmorImmo[i].sommePer2 +
+              tabAmortissementMob[i].annuiteMobilier
+          )),
+      ResultatCumule:
+        montantAnnuelLoyer -
+        (sommeChExternes +
+          impots -
+          reportDeficit +
           Math.trunc(
             tabAmorFrais[i].annuiteFrais +
               tabAmorImmo[i].sommePer2 +
@@ -498,6 +511,7 @@ let calcul = function () {
   }
 
   for (var i = 5; i < 10; i++) {
+    var reportDeficit = Decl2033B[i - 1].ResultatCumule;
     Decl2033B.push({
       annee: Number(dateBegin.format("YYYY")) + i,
       Loyers: montantAnnuelLoyer,
@@ -514,16 +528,25 @@ let calcul = function () {
         Math.trunc(
           tabAmorImmo[i].sommePer2 + tabAmortissementMob[i].annuiteMobilier
         ),
-      ResultatExploitation:
+      Resultat:
         montantAnnuelLoyer -
         (sommeChExternes +
           impots +
           Math.trunc(
             tabAmorImmo[i].sommePer2 + tabAmortissementMob[i].annuiteMobilier
           )),
+      ResultatCumule:
+        montantAnnuelLoyer -
+        (sommeChExternes +
+          impots -
+          reportDeficit +
+          Math.trunc(
+            tabAmorImmo[i].sommePer2 + tabAmortissementMob[i].annuiteMobilier
+          )),
     });
   }
   for (var i = 10; i < 15; i++) {
+    var reportDeficit = Decl2033B[i - 1].ResultatCumule;
     Decl2033B.push({
       annee: Number(dateBegin.format("YYYY")) + i,
       Loyers: montantAnnuelLoyer,
@@ -534,12 +557,19 @@ let calcul = function () {
       TotalProduitExplo: montantAnnuelLoyer,
       TotalCharExploitations:
         sommeChExternes + impots + Math.trunc(tabAmorImmo[i].sommePer2),
-      ResultatExploitation:
+      Resultat:
         montantAnnuelLoyer -
         (sommeChExternes + impots + Math.trunc(tabAmorImmo[i].sommePer2)),
+      ResultatCumule:
+        montantAnnuelLoyer -
+        (sommeChExternes +
+          impots -
+          reportDeficit +
+          Math.trunc(tabAmorImmo[i].sommePer2)),
     });
   }
   for (var i = 15; i < 20; i++) {
+    var reportDeficit = Decl2033B[i - 1].ResultatCumule;
     Decl2033B.push({
       annee: Number(dateBegin.format("YYYY")) + i,
       Loyers: montantAnnuelLoyer,
@@ -549,12 +579,19 @@ let calcul = function () {
       DotationAmortissement: Math.trunc(tabAmorImmo[i].sommePer3),
       TotalCharExploitations:
         sommeChExternes + impots + Math.trunc(tabAmorImmo[i].sommePer3),
-      ResultatExploitation:
+      Resultat:
         montantAnnuelLoyer -
         (sommeChExternes + impots + Math.trunc(tabAmorImmo[i].sommePer3)),
+      ResultatCumule:
+        montantAnnuelLoyer -
+        (sommeChExternes +
+          impots -
+          reportDeficit +
+          Math.trunc(tabAmorImmo[i].sommePer3)),
     });
   }
   for (var i = 20; i < 30; i++) {
+    var reportDeficit = Decl2033B[i - 1].ResultatCumule;
     Decl2033B.push({
       annee: Number(dateBegin.format("YYYY")) + i,
       Loyers: montantAnnuelLoyer,
@@ -564,12 +601,19 @@ let calcul = function () {
       DotationAmortissement: Math.trunc(tabAmorImmo[i].sommePer4),
       TotalCharExploitations:
         sommeChExternes + impots + Math.trunc(tabAmorImmo[i].sommePer4),
-      ResultatExploitation:
+      Resultat:
         montantAnnuelLoyer -
         (sommeChExternes + impots + Math.trunc(tabAmorImmo[i].sommePer4)),
+      ResultatCumule:
+        montantAnnuelLoyer -
+        (sommeChExternes +
+          impots -
+          reportDeficit +
+          Math.trunc(tabAmorImmo[i].sommePer4)),
     });
   }
   for (var i = 30; i < 50; i++) {
+    var reportDeficit = Decl2033B[i - 1].ResultatCumule;
     Decl2033B.push({
       annee: Number(dateBegin.format("YYYY")) + i,
       Loyers: montantAnnuelLoyer,
@@ -579,9 +623,15 @@ let calcul = function () {
       DotationAmortissement: Math.trunc(tabAmorImmo[i].sommePer5),
       TotalCharExploitations:
         sommeChExternes + impots + Math.trunc(tabAmorImmo[i].sommePer5),
-      ResultatExploitation:
+      Resultat:
         montantAnnuelLoyer -
         (sommeChExternes + impots + Math.trunc(tabAmorImmo[i].sommePer5)),
+      ResultatCumule:
+        montantAnnuelLoyer -
+        (sommeChExternes +
+          impots -
+          reportDeficit +
+          Math.trunc(tabAmorImmo[i].sommePer5)),
     });
   }
   Decl2033B.push({
@@ -592,10 +642,10 @@ let calcul = function () {
     Impots: impots,
     DotationAmortissement: Math.trunc(tabAmorImmo[50].sommePer6),
     TotalCharExploitations:
-      sommeChExternes + impots + Math.trunc(tabAmorImmo[i].sommePer6),
+      sommeChExternes + impots + Math.trunc(tabAmorImmo[50].sommePer6),
     ResultatExploitation:
       montantAnnuelLoyer -
-      (sommeChExternes + impots + Math.trunc(tabAmorImmo[i].sommePer6)),
+      (sommeChExternes + impots + Math.trunc(tabAmorImmo[50].sommePer6)),
   });
   console.log("2033B:", Decl2033B);
 
@@ -622,16 +672,16 @@ let calcul = function () {
   }
   console.log(Deficit);*/
 
-  /*Déclaration 2033C*/
+  /*Déclaration 2033C
 
   Decl2033C = [];
   Decl2033C.push({
     annee: Number(dateBegin.format("YYYY")),
     ValeurBruteFrais: tabAmorFrais[0].valeurBrute,
-    /*AugmentationsFrais:*/
+    /*AugmentationsFrais:
     DiminutionsFrais: tabAmorFrais[0].annuiteFrais,
     ValeurBruteFinExFrais: tabAmorFrais[0].vnc,
-    ValeurBruteImmo: tabAmorImmO[0].valeurBrute,
+    ValeurBruteImmo: tabAmorImmo[0].valeurBrute,
     AugmentationsImmo: tabAmorImmo[0].valeurBrute,
     DiminutionsImmo: tabAmorImmo[0].sommeAnnProra,
     ValeurBruteFinExMob: tabAmorImmo[0].vncPer1,
@@ -714,5 +764,5 @@ let calcul = function () {
     AugmentationsImmo: tabAmorImmo[i].valeurBrute,
     DiminutionsImmo: tabAmorImmo[i].sommeAnnProra,
   });
-  console.log("2033C:", Decl2033C);
+  console.log("2033C:", Decl2033C); */
 };
