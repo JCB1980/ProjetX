@@ -315,7 +315,6 @@ let calcul = function () {
     tabAmorImmo[49].vncPer5 - tabAmorImmo[50].sommePer6
   );
 
-  console.table(tabAmorImmo);
   console.log(tabAmorImmo);
 
   /*Tâches :
@@ -656,42 +655,19 @@ let calcul = function () {
   });
   console.log("2033B:", Decl2033B);
 
-  /*Gérer les résultats
-  Le deficit de l'année N doit être reporté en N+1;
-  Pas de deficit pour la première année
-  
-  var Deficit = 0;
-  var Benefice =0;
-  Resultat = [];
-
-  Resultat.push({
-    annee: Number(dateBegin.format("YYYY")),
-    Perte: Deficite,
-    Gain : Benefice,
-  });
-  for (var i = 1; i < 50; i++) {
-    Resultat.push({
-      annee: Number(dateBegin.format("YYYY")) + i,
-      Perte:
-        Decl2033B.ResultatExploitation[0] - Decl2033B.ResultatExploitation[1],
-      Gain: Benefice,
-    });
-  }
-  console.log(Deficit);*/
-
-  /*Déclaration 2033C
+  /*Déclaration 2033C*/
 
   Decl2033C = [];
   Decl2033C.push({
     annee: Number(dateBegin.format("YYYY")),
     ValeurBruteFrais: tabAmorFrais[0].valeurBrute,
-    /*AugmentationsFrais:
+    /*AugmentationsFrais:*/
     DiminutionsFrais: tabAmorFrais[0].annuiteFrais,
     ValeurBruteFinExFrais: tabAmorFrais[0].vnc,
     ValeurBruteImmo: tabAmorImmo[0].valeurBrute,
-    AugmentationsImmo: tabAmorImmo[0].valeurBrute,
+    /*AugmentationsImmo: tabAmorImmo[0].valeurBrute*/
     DiminutionsImmo: tabAmorImmo[0].sommeAnnProra,
-    ValeurBruteFinExMob: tabAmorImmo[0].vncPer1,
+    ValeurBruteFinExImmo: tabAmorImmo[0].vncPer1,
     ValeurBruteMob: tabAmortissementMob[0].valeurBrute,
     DiminutionsMob: tabAmortissementMob[0].annuiteMobilierPro,
     ValeurBruteFinExMob: tabAmortissementMob[0].vnc,
@@ -699,15 +675,15 @@ let calcul = function () {
   for (var i = 1; i < 5; i++) {
     Decl2033C.push({
       annee: Number(dateBegin.format("YYYY")) + i,
-      ValeurBruteFrais: tabAmorFrais[i].ValeurBruteFinExFrais,
+      ValeurBruteFrais: Decl2033C[i - 1].ValeurBruteFinExFrais,
       DiminutionsFrais: tabAmorFrais[i].annuiteFrais,
       ValeurBruteFinExFrais: tabAmorFrais[i].vnc,
-      ValeurBruteImmo: tabAmorImmo[i].valeurBrute,
+      ValeurBruteImmo: Decl2033C[i - 1].ValeurBruteFinExImmo,
       AugmentationsImmo: tabAmorImmo[i].valeurBrute,
-      DiminutionsImmo: tabAmorImmo[i].sommeAnnProra,
-      ValeurBruteFinExMob: tabAmorImmo[i].vncPer1,
-      ValeurBruteMob: tabAmortissementMob[i].valeurBrute,
-      DiminutionsMob: tabAmortissementMob[i].annuiteMobilierPro,
+      DiminutionsImmo: tabAmorImmo[i].sommePer2,
+      ValeurBruteFinExImmo: tabAmorImmo[i].vncPer2,
+      ValeurBruteMob: Decl2033C[i - 1].ValeurBruteFinExMob,
+      DiminutionsMob: tabAmortissementMob[i].annuiteMobilier,
       ValeurBruteFinExMob: tabAmortissementMob[i].vnc,
     });
   }
@@ -715,12 +691,12 @@ let calcul = function () {
     Decl2033C.push({
       annee: Number(dateBegin.format("YYYY")) + i,
 
-      ValeurBruteImmo: tabAmorImmo[i].valeurBrute,
+      ValeurBruteImmo: Decl2033C[i - 1].ValeurBruteFinExImmo,
       AugmentationsImmo: tabAmorImmo[i].valeurBrute,
-      DiminutionsImmo: tabAmorImmo[i].sommeAnnProra,
-      ValeurBruteFinExMob: tabAmorImmo[i].vncPer2,
-      ValeurBruteMob: tabAmortissementMob[i].valeurBrute,
-      DiminutionsMob: tabAmortissementMob[i].annuiteMobilierPro,
+      DiminutionsImmo: tabAmorImmo[i].sommePer2,
+      ValeurBruteFinExImmo: tabAmorImmo[i].vncPer2,
+      ValeurBruteMob: Decl2033C[i - 1].ValeurBruteFinExMob,
+      DiminutionsMob: tabAmortissementMob[i].annuiteMobilier,
       ValeurBruteFinExMob: tabAmortissementMob[i].vnc,
     });
   }
@@ -728,48 +704,48 @@ let calcul = function () {
     Decl2033C.push({
       annee: Number(dateBegin.format("YYYY")) + i,
 
-      ValeurBruteImmo: tabAmorImmo[i].valeurBrute,
+      ValeurBruteImmo: Decl2033C[i - 1].ValeurBruteFinExImmo,
       AugmentationsImmo: tabAmorImmo[i].valeurBrute,
-      DiminutionsImmo: tabAmorImmo[i].sommeAnnProra,
-      ValeurBruteFinExMob: tabAmorImmo[i].vncPer2,
-      ValeurBruteMob: tabAmortissementMob[i].valeurBrute,
-      DiminutionsMob: tabAmortissementMob[i].annuiteMobilierPro,
-      ValeurBruteFinExMob: tabAmortissementMob[i].vnc,
+      DiminutionsImmo: tabAmorImmo[i].sommePer2,
+      ValeurBruteFinExImmo: tabAmorImmo[i].vncPer2,
     });
   }
   for (var i = 15; i < 20; i++) {
     Decl2033C.push({
       annee: Number(dateBegin.format("YYYY")) + i,
 
-      ValeurBruteImmo: tabAmorImmo[i].valeurBrute,
+      ValeurBruteImmo: Decl2033C[i - 1].ValeurBruteFinExImmo,
       AugmentationsImmo: tabAmorImmo[i].valeurBrute,
-      DiminutionsImmo: tabAmorImmo[i].sommeAnnProra,
+      DiminutionsImmo: tabAmorImmo[i].sommePer3,
+      ValeurBruteFinExImmo: tabAmorImmo[i].vncPer3,
     });
   }
   for (var i = 20; i < 30; i++) {
     Decl2033C.push({
       annee: Number(dateBegin.format("YYYY")) + i,
 
-      ValeurBruteImmo: tabAmorImmo[i].valeurBrute,
+      ValeurBruteImmo: Decl2033C[i - 1].ValeurBruteFinExImmo,
       AugmentationsImmo: tabAmorImmo[i].valeurBrute,
-      DiminutionsImmo: tabAmorImmo[i].sommeAnnProra,
+      DiminutionsImmo: tabAmorImmo[i].sommePer4,
+      ValeurBruteFinExImmo: tabAmorImmo[i].vncPer4,
     });
   }
   for (var i = 30; i < 50; i++) {
-    Decl2033B.push({
+    Decl2033C.push({
       annee: Number(dateBegin.format("YYYY")) + i,
 
-      ValeurBruteImmo: tabAmorImmo[i].valeurBrute,
+      ValeurBruteImmo: Decl2033C[i - 1].ValeurBruteFinExImmo,
       AugmentationsImmo: tabAmorImmo[i].valeurBrute,
-      DiminutionsImmo: tabAmorImmo[i].sommeAnnProra,
+      DiminutionsImmo: tabAmorImmo[i].sommePer5,
+      ValeurBruteFinExImmo: tabAmorImmo[i].vncPer5,
     });
   }
-  Decl2033B.push({
+  Decl2033C.push({
     annee: Number(dateFinImmo.format("YYYY")),
 
-    ValeurBruteImmo: tabAmorImmo[i].valeurBrute,
-    AugmentationsImmo: tabAmorImmo[i].valeurBrute,
-    DiminutionsImmo: tabAmorImmo[i].sommeAnnProra,
+    ValeurBruteImmo: Decl2033C[50 - 1].ValeurBruteFinExImmo,
+    DiminutionsImmo: tabAmorImmo[50].sommePer6,
+    ValeurBruteFinExImmo: tabAmorImmo[50].vncPer6,
   });
-  console.log("2033C:", Decl2033C); */
+  console.log("2033C:", Decl2033C);
 };
