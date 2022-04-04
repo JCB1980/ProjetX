@@ -661,7 +661,6 @@ let calcul = function () {
   Decl2033C.push({
     annee: Number(dateBegin.format("YYYY")),
     ValeurBruteFrais: tabAmorFrais[0].valeurBrute,
-    /*AugmentationsFrais:*/
     DiminutionsFrais: tabAmorFrais[0].annuiteFrais,
     ValeurBruteFinExFrais: tabAmorFrais[0].vnc,
     ValeurBruteImmo: tabAmorImmo[0].valeurBrute,
@@ -679,7 +678,7 @@ let calcul = function () {
       DiminutionsFrais: tabAmorFrais[i].annuiteFrais,
       ValeurBruteFinExFrais: tabAmorFrais[i].vnc,
       ValeurBruteImmo: Decl2033C[i - 1].ValeurBruteFinExImmo,
-      AugmentationsImmo: tabAmorImmo[i].valeurBrute,
+
       DiminutionsImmo: tabAmorImmo[i].sommePer2,
       ValeurBruteFinExImmo: tabAmorImmo[i].vncPer2,
       ValeurBruteMob: Decl2033C[i - 1].ValeurBruteFinExMob,
@@ -692,7 +691,7 @@ let calcul = function () {
       annee: Number(dateBegin.format("YYYY")) + i,
 
       ValeurBruteImmo: Decl2033C[i - 1].ValeurBruteFinExImmo,
-      AugmentationsImmo: tabAmorImmo[i].valeurBrute,
+
       DiminutionsImmo: tabAmorImmo[i].sommePer2,
       ValeurBruteFinExImmo: tabAmorImmo[i].vncPer2,
       ValeurBruteMob: Decl2033C[i - 1].ValeurBruteFinExMob,
@@ -705,7 +704,7 @@ let calcul = function () {
       annee: Number(dateBegin.format("YYYY")) + i,
 
       ValeurBruteImmo: Decl2033C[i - 1].ValeurBruteFinExImmo,
-      AugmentationsImmo: tabAmorImmo[i].valeurBrute,
+
       DiminutionsImmo: tabAmorImmo[i].sommePer2,
       ValeurBruteFinExImmo: tabAmorImmo[i].vncPer2,
     });
@@ -715,7 +714,7 @@ let calcul = function () {
       annee: Number(dateBegin.format("YYYY")) + i,
 
       ValeurBruteImmo: Decl2033C[i - 1].ValeurBruteFinExImmo,
-      AugmentationsImmo: tabAmorImmo[i].valeurBrute,
+
       DiminutionsImmo: tabAmorImmo[i].sommePer3,
       ValeurBruteFinExImmo: tabAmorImmo[i].vncPer3,
     });
@@ -725,7 +724,7 @@ let calcul = function () {
       annee: Number(dateBegin.format("YYYY")) + i,
 
       ValeurBruteImmo: Decl2033C[i - 1].ValeurBruteFinExImmo,
-      AugmentationsImmo: tabAmorImmo[i].valeurBrute,
+
       DiminutionsImmo: tabAmorImmo[i].sommePer4,
       ValeurBruteFinExImmo: tabAmorImmo[i].vncPer4,
     });
@@ -735,7 +734,7 @@ let calcul = function () {
       annee: Number(dateBegin.format("YYYY")) + i,
 
       ValeurBruteImmo: Decl2033C[i - 1].ValeurBruteFinExImmo,
-      AugmentationsImmo: tabAmorImmo[i].valeurBrute,
+
       DiminutionsImmo: tabAmorImmo[i].sommePer5,
       ValeurBruteFinExImmo: tabAmorImmo[i].vncPer5,
     });
@@ -748,4 +747,51 @@ let calcul = function () {
     ValeurBruteFinExImmo: tabAmorImmo[50].vncPer6,
   });
   console.log("2033C:", Decl2033C);
+
+  /*Déclaration 2033D*/
+
+  Decl2033D = [];
+
+  var Case983 = Decl2033B[0].Resultat < 0 ? Decl2033B[0].Resultat : 0;
+  var Case984 = Case982 - Case983;
+
+  Decl2033D.push({
+    annee: Number(dateBegin.format("YYYY")),
+    DeficitPrecedent: 0,
+    DeficitImpute: 0,
+    DeficitReportable: Decl2033B[0].Resultat < 0 ? Decl2033B[0].Resultat : 0,
+    DeficitExercice: Decl2033B[0].Resultat < 0 ? Decl2033B[0].Resultat : 0,
+  });
+
+  for (var i = 1; i < 50; i++) {
+    /*var Case982 = Decl2033B[i - 1].Resultat < 0 ? Decl2033B[i - 1].Resultat : 0;
+    var Case983 = Decl2033B[i - 1].Resultat > 0 ? Decl2033B[i - 1].Resultat : 0;
+
+    var Case860 = ;*/
+
+    Decl2033D.push({
+      annee: Number(dateBegin.format("YYYY")) + i,
+      DeficitPrecedent:
+        Decl2033B[i - 1].Resultat < 0 ? Decl2033B[i - 1].Resultat : 0,
+      DeficitImpute:
+        Decl2033B[i - 1].Resultat > 0 ? Decl2033B[i - 1].Resultat : 0,
+      DeficitReportable:
+        Decl2033B[i].Resultat + Decl2033D[i - 1].DeficitReportable,
+      DeficitExercice: Decl2033B[i].Resultat < 0 ? Decl2033B[i].Resultat : 0,
+    });
+  }
+  var Case982 = Decl2033B[49].Resultat < 0 ? Decl2033B[i - 1].Resultat : 0;
+  var Case983 = Decl2033B[49].Resultat < 0 ? Decl2033B[i - 1].Resultat : 0;
+  var Case984 = Case982 - Case983;
+  var Case860 = Decl2033B[49].Resultat < 0 ? Decl2033B[49].Resultat : 0;
+
+  Decl2033D.push({
+    annee: Number(dateBegin.format("YYYY")),
+    DeficitPrecedent: Case982,
+    DeficitImpute: Case983,
+    DeficitReportable: Case984,
+    DeficitExercice: Case860,
+  });
+
+  console.log("Decl2033D:", Decl2033D);
 };
