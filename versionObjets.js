@@ -1,11 +1,3 @@
-Vue.createApp({
-  data() {
-    return {
-      message: "Hello Vue!",
-    };
-  },
-}).mount("#app");
-
 let calcul = function () {
   let valeurDuBien = Number((document.querySelector("#A1").value = 100000));
   let valeurMobilier = Number((document.querySelector("#A6").value = 5000));
@@ -763,4 +755,23 @@ let calcul = function () {
   }
 
   console.log("Decl2033D:", Decl2033D);
+
+  Vue.createApp({
+    data() {
+      /* data est une fonction qui renvoi vue dans un objet*/
+      return {
+        titre: "Déclaration 2033A",
+        valeurs: [
+          { id: 0, content: Decl2033A.annee },
+          { id: 1, content: Decl2033A.BrutCorporel },
+          { id: 2, content: Decl2033A.AmorCorporel },
+          { id: 3, content: Decl2033A.NetCorporel },
+          { id: 4, content: Decl2033A.BrutIncorporel },
+          { id: 5, content: Decl2033A.AmorIncorporel },
+          { id: 6, content: Decl2033A.NetIncorporel },
+          { id: 7, content: Decl2033A.Emprunt },
+        ],
+      };
+    },
+  }).mount("#app"); /* mount est une méthode pour monter l'appli que l'id*/
 };

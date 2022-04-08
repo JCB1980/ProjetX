@@ -10,18 +10,10 @@
     <script src="versionObjets.js" defer></script>
     <script src="https://unpkg.com/vue@3"></script>
 
-<div id="app">{{ message }}</div>
-
-
 
 <body>
-
-    <p>Display some text when the checkbox is checked:</p>
-
-    <label for="myCheck">Ascenseur ?:</label>
-    <input type="checkbox" id="myCheck" onclick="myFunction()">
-
-    <p id="text" style="display:none">Checkbox is CHECKED!</p>
+   
+       
 
     <label for="">Date de début d'activité</label> <input id="start_date" type="date" required /></br>
     <label for="A1">Valeur du bien immobilier :</label><input type="number" id="A1" required value="" /><br>
@@ -49,26 +41,18 @@
 
 </form>
 
-<table>
-    <tr>
-        <td>ligne1 colonne1</td>
-        <td>ligne1 colonne2</td>
-        <td>ligne1 colonne3</td>
-        <td>ligne1 colonne4</td>
-    </tr>
-    <tr>
-        <td>ligne2 colonne1</td>
-        <td>ligne2 colonne2</td>
-        <td>ligne2 colonne3</td>
-        <td>ligne2 colonne4</td>
-    </tr>
-    ...
-</table>
 
-<p> L'annuité 1 du mobilier est de : <span id="annuiteMobilier"></span> euros</p>
+
+<div id="app">
+    <p>{{titre}}</p>
+    <p v-for="valeur in valeurs":key="valeur.id">
+        {{valeur.content}}
+     </p>-->
+ </div>
+
+<!--<p> L'annuité 1 du mobilier est de : <span id="annuiteMobilier"></span> euros</p>
 <p> L'annuité 1 immobilière est de : <span id="annuiteImmobilier"></span> euros</p>
-<p> L'annuité 1 des frais est de : <span id="annuiteFrais"></span>euros</p>
-
+<p> L'annuité 1 des frais est de : <span id="annuiteFrais"></span>euros</p>-->
 
 
 </body>
