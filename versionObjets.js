@@ -1,3 +1,11 @@
+Vue.createApp({
+  data() {
+    return {
+      message: "Hello Vue!",
+    };
+  },
+}).mount("#app");
+
 let calcul = function () {
   let valeurDuBien = Number((document.querySelector("#A1").value = 100000));
   let valeurMobilier = Number((document.querySelector("#A6").value = 5000));
@@ -99,7 +107,7 @@ let calcul = function () {
   });
   for (var i = 1; i < 10; i++) {
     tabAmortissementMob.push({
-      annee: Number(dateBegin.format("YYYY")) + i, // On peut initialiser la bonne année directement
+      annee: Number(dateBegin.format("YYYY")) + i,
       annuiteMobilier: annuiteMobilier,
       vnc: vnc,
     });
@@ -179,8 +187,6 @@ let calcul = function () {
   let partC = valeurDuBien * TX_REP_EQUIPEMENT;
   let partD = valeurDuBien * TX_REP_AGENCEMENT;
 
-  console.log(partA, partB, partC, partD);
-
   var annuiteGrosOeuvre = partA * TX_AMOR_GROS_OEUVRE;
   var annuiteFacade = partB * TX_AMOR_FACADE;
   var annuiteEquipement = partC * TX_AMOR_EQUIPEMENT;
@@ -195,28 +201,16 @@ let calcul = function () {
 
   var annuitePeriode5 = annuiteGrosOeuvre;
 
-  /*var annGrosProra = Math.trunc((annuiteGrosOeuvre * days) / daysYear);
+  var annGrosProra = Math.trunc((annuiteGrosOeuvre * days) / daysYear);
   var annFacadeProra = Math.trunc((annuiteFacade * days) / daysYear);
   var annEquiProra = Math.trunc((annuiteEquipement * days) / daysYear);
-  var annAgenProra = Math.trunc((annuiteAgencement * days) / daysYear);*/
-
-  var annGrosProra = (annuiteGrosOeuvre * days) / daysYear;
-  var annFacadeProra = (annuiteFacade * days) / daysYear;
-  var annEquiProra = (annuiteEquipement * days) / daysYear;
-  var annAgenProra = (annuiteAgencement * days) / daysYear;
+  var annAgenProra = Math.trunc((annuiteAgencement * days) / daysYear);
 
   var sommeAnnuiteProra =
     annGrosProra + annFacadeProra + annEquiProra + annAgenProra;
   var annLastYear = (annuitePeriode2 * days2Immo) / daysYear;
-  console.log(annLastYear);
-  console.log(daysYear);
+
   var sommeAnnuiteLY = annLastYear;
-
-  console.log(days);
-  console.log("Immo:", days2Immo);
-
-  console.log("Frais", days2Frais);
-  console.log("Mob", days2Mob);
 
   const tabAmorImmo = [];
 
@@ -260,8 +254,6 @@ let calcul = function () {
       vncPer4: 0,
     });
   }
-  console.log(tabAmorImmo.sommePer4);
-  console.log(tabAmorImmo.annuiteGros);
 
   for (var i = 30; i < 50; i++) {
     tabAmorImmo.push({
@@ -271,7 +263,6 @@ let calcul = function () {
       vncPer5: 0,
     });
   }
-  console.log(tabAmorImmo.sommePer5);
 
   tabAmorImmo.push({
     annee: Number(dateFinImmo.format("YYYY")),
@@ -316,11 +307,6 @@ let calcul = function () {
   );
 
   console.log(tabAmorImmo);
-
-  /*Tâches :
-  Coder une Fonction déclaration qui va récupérer les données de la fonction calcul 
-  Donner la possibilité à l'utilisateur de sélectionner l'année de déclaration
-*/
 
   /*Déclaration 2033A*/
 
@@ -467,7 +453,7 @@ let calcul = function () {
 
   for (var i = 1; i < 5; i++) {
     var reportResultat = Decl2033B[i - 1].ResultatCumule;
-    console.log(reportResultat);
+
     Decl2033B.push({
       annee: Number(dateBegin.format("YYYY")) + i,
       Loyers: montantAnnuelLoyer,
@@ -664,7 +650,6 @@ let calcul = function () {
     DiminutionsFrais: tabAmorFrais[0].annuiteFrais,
     ValeurBruteFinExFrais: tabAmorFrais[0].vnc,
     ValeurBruteImmo: tabAmorImmo[0].valeurBrute,
-    /*AugmentationsImmo: tabAmorImmo[0].valeurBrute*/
     DiminutionsImmo: tabAmorImmo[0].sommeAnnProra,
     ValeurBruteFinExImmo: tabAmorImmo[0].vncPer1,
     ValeurBruteMob: tabAmortissementMob[0].valeurBrute,
@@ -678,10 +663,11 @@ let calcul = function () {
       DiminutionsFrais: tabAmorFrais[i].annuiteFrais,
       ValeurBruteFinExFrais: tabAmorFrais[i].vnc,
       ValeurBruteImmo: Decl2033C[i - 1].ValeurBruteFinExImmo,
-
+      AugmentationsImmo: 0,
       DiminutionsImmo: tabAmorImmo[i].sommePer2,
       ValeurBruteFinExImmo: tabAmorImmo[i].vncPer2,
       ValeurBruteMob: Decl2033C[i - 1].ValeurBruteFinExMob,
+      AugmentationsMob: 0,
       DiminutionsMob: tabAmortissementMob[i].annuiteMobilier,
       ValeurBruteFinExMob: tabAmortissementMob[i].vnc,
     });
@@ -691,10 +677,11 @@ let calcul = function () {
       annee: Number(dateBegin.format("YYYY")) + i,
 
       ValeurBruteImmo: Decl2033C[i - 1].ValeurBruteFinExImmo,
-
+      AugmentationsImmo: 0,
       DiminutionsImmo: tabAmorImmo[i].sommePer2,
       ValeurBruteFinExImmo: tabAmorImmo[i].vncPer2,
       ValeurBruteMob: Decl2033C[i - 1].ValeurBruteFinExMob,
+      AugmentationsMob: 0,
       DiminutionsMob: tabAmortissementMob[i].annuiteMobilier,
       ValeurBruteFinExMob: tabAmortissementMob[i].vnc,
     });
@@ -704,7 +691,7 @@ let calcul = function () {
       annee: Number(dateBegin.format("YYYY")) + i,
 
       ValeurBruteImmo: Decl2033C[i - 1].ValeurBruteFinExImmo,
-
+      AugmentationsImmo: 0,
       DiminutionsImmo: tabAmorImmo[i].sommePer2,
       ValeurBruteFinExImmo: tabAmorImmo[i].vncPer2,
     });
@@ -714,7 +701,7 @@ let calcul = function () {
       annee: Number(dateBegin.format("YYYY")) + i,
 
       ValeurBruteImmo: Decl2033C[i - 1].ValeurBruteFinExImmo,
-
+      AugmentationsImmo: 0,
       DiminutionsImmo: tabAmorImmo[i].sommePer3,
       ValeurBruteFinExImmo: tabAmorImmo[i].vncPer3,
     });
@@ -724,7 +711,7 @@ let calcul = function () {
       annee: Number(dateBegin.format("YYYY")) + i,
 
       ValeurBruteImmo: Decl2033C[i - 1].ValeurBruteFinExImmo,
-
+      AugmentationsImmo: 0,
       DiminutionsImmo: tabAmorImmo[i].sommePer4,
       ValeurBruteFinExImmo: tabAmorImmo[i].vncPer4,
     });
@@ -734,14 +721,13 @@ let calcul = function () {
       annee: Number(dateBegin.format("YYYY")) + i,
 
       ValeurBruteImmo: Decl2033C[i - 1].ValeurBruteFinExImmo,
-
+      AugmentationsImmo: 0,
       DiminutionsImmo: tabAmorImmo[i].sommePer5,
       ValeurBruteFinExImmo: tabAmorImmo[i].vncPer5,
     });
   }
   Decl2033C.push({
     annee: Number(dateFinImmo.format("YYYY")),
-
     ValeurBruteImmo: Decl2033C[50 - 1].ValeurBruteFinExImmo,
     DiminutionsImmo: tabAmorImmo[50].sommePer6,
     ValeurBruteFinExImmo: tabAmorImmo[50].vncPer6,
@@ -752,9 +738,6 @@ let calcul = function () {
 
   Decl2033D = [];
 
-  var Case983 = Decl2033B[0].Resultat < 0 ? Decl2033B[0].Resultat : 0;
-  var Case984 = Case982 - Case983;
-
   Decl2033D.push({
     annee: Number(dateBegin.format("YYYY")),
     DeficitPrecedent: 0,
@@ -764,11 +747,6 @@ let calcul = function () {
   });
 
   for (var i = 1; i < 50; i++) {
-    /*var Case982 = Decl2033B[i - 1].Resultat < 0 ? Decl2033B[i - 1].Resultat : 0;
-    var Case983 = Decl2033B[i - 1].Resultat > 0 ? Decl2033B[i - 1].Resultat : 0;
-
-    var Case860 = ;*/
-
     Decl2033D.push({
       annee: Number(dateBegin.format("YYYY")) + i,
       DeficitPrecedent:
@@ -778,20 +756,11 @@ let calcul = function () {
       DeficitReportable:
         Decl2033B[i].Resultat + Decl2033D[i - 1].DeficitReportable,
       DeficitExercice: Decl2033B[i].Resultat < 0 ? Decl2033B[i].Resultat : 0,
+      TotalDefRestantAReporter:
+        Decl2033B[i].Resultat + Decl2033D[i - 1].DeficitReportable,
+      DeficitExercice: Decl2033B[i].Resultat < 0 ? Decl2033B[i].Resultat : 0,
     });
   }
-  var Case982 = Decl2033B[49].Resultat < 0 ? Decl2033B[i - 1].Resultat : 0;
-  var Case983 = Decl2033B[49].Resultat < 0 ? Decl2033B[i - 1].Resultat : 0;
-  var Case984 = Case982 - Case983;
-  var Case860 = Decl2033B[49].Resultat < 0 ? Decl2033B[49].Resultat : 0;
-
-  Decl2033D.push({
-    annee: Number(dateBegin.format("YYYY")),
-    DeficitPrecedent: Case982,
-    DeficitImpute: Case983,
-    DeficitReportable: Case984,
-    DeficitExercice: Case860,
-  });
 
   console.log("Decl2033D:", Decl2033D);
 };
