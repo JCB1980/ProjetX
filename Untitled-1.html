@@ -7,14 +7,11 @@
     <link rel="stylesheet" type="text/css" href="lmnp1.css" />
     <script src="https://cdnjs.cloudflare.com/ajax/libs/moment.js/2.29.1/moment.min.js"></script>
     <script src="https://ajax.googleapis.com/ajax/libs/jquery/3.5.1/jquery.min.js"></script>
-    <script src="versionObjets.js" defer></script>
     <script src="https://unpkg.com/vue@3"></script>
-
+    <script src="versionObjets.js" defer></script>
+</head>
 
 <body>
-   
-       
-
     <label for="">Date de début d'activité</label> <input id="start_date" type="date" required /></br>
     <label for="A1">Valeur du bien immobilier :</label><input type="number" id="A1" required value="" /><br>
     <label for="A2">Montant annuel du loyer HC :</label><input type="number" id="A2" required value="" /><br>
@@ -35,26 +32,19 @@
     <label for="A17"> Déductions spécifiques :</label><input type="number" id="A17" /><br>
     <label for="A18">L'immeuble est-il équipé d'un ascenseur ?</label><input type="checkbox" id="A18" />oui
     <p> <input type="button" value="Calculer" onclick="calcul()"></p>
+
+    <div id="app">
+        <p>{{titre}}</p>
+        <p v-for="valeur in valeurs":key="valeur.id">
+            {{valeur.content}}
+         </p>-->
+     </div>
+    
 </body>
 
 </html>
 
-</form>
-
-
-
-<div id="app">
-    <p>{{titre}}</p>
-    <p v-for="valeur in valeurs":key="valeur.id">
-        {{valeur.content}}
-     </p>-->
- </div>
 
 <!--<p> L'annuité 1 du mobilier est de : <span id="annuiteMobilier"></span> euros</p>
 <p> L'annuité 1 immobilière est de : <span id="annuiteImmobilier"></span> euros</p>
 <p> L'annuité 1 des frais est de : <span id="annuiteFrais"></span>euros</p>-->
-
-
-</body>
-
-</html>

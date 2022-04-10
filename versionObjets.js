@@ -755,6 +755,7 @@ let calcul = function () {
   }
 
   console.log("Decl2033D:", Decl2033D);
+  console.log("Decl2033A:", Decl2033A);
 
   Vue.createApp({
     data() {
@@ -762,14 +763,14 @@ let calcul = function () {
       return {
         titre: "Déclaration 2033A",
         valeurs: [
-          { id: 0, content: Decl2033A.annee },
-          { id: 1, content: Decl2033A.BrutCorporel },
-          { id: 2, content: Decl2033A.AmorCorporel },
-          { id: 3, content: Decl2033A.NetCorporel },
-          { id: 4, content: Decl2033A.BrutIncorporel },
-          { id: 5, content: Decl2033A.AmorIncorporel },
-          { id: 6, content: Decl2033A.NetIncorporel },
-          { id: 7, content: Decl2033A.Emprunt },
+          { id: 0, content: Decl2033A[0].annee },
+          { id: 1, content: Decl2033A[0].BrutCorporel },
+          { id: 2, content: Decl2033A[0].AmorCorporel },
+          { id: 3, content: Decl2033A[0].NetCorporel },
+          { id: 4, content: Decl2033A[0].BrutIncorporel },
+          { id: 5, content: Decl2033A[0].AmorIncorporel },
+          { id: 6, content: Decl2033A[0].NetIncorporel },
+          { id: 7, content: Decl2033A[0].Emprunt },
         ],
       };
     },
